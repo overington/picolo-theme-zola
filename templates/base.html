@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>{% block title %}{{ config.title }}{% endblock %}</title>
     <meta name="description" content="{% block description %}{{ config.description | default(value=config.extra.site_description) }}{% endblock %}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -35,6 +36,8 @@
                 {% for item in config.extra.nav_items %}
                 <li><a href="{{ item.path }}">{{ item.name }}</a></li>
                 {% endfor %}
+                <li>{% include "inc/theme-toggle.html" %}</li>
+
             </ul>
             {% endif %}
         </nav>
@@ -55,6 +58,8 @@
             </footer>
         {% endblock footer %}
     {% endif %}
+    <!-- Minimal theme switcher -->
+    <script src="{{ get_url(path="js/minimal-theme-switcher.js") }}"></script>
 </body>
 
 </html>

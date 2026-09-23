@@ -18,6 +18,7 @@ nav.site-nav {
 
     // Remove underlines from brand links
     strong a {
+        color: var(--pico-primary-inverse);
         text-decoration: none;
         padding: 0.2rem 1rem; // Add horizontal padding
         display: inline-block;
@@ -26,24 +27,38 @@ nav.site-nav {
     // Style navigation links with theme awareness
     ul {
         li {
-            a {
+            a, button.theme-toggle {
                 // Use white/light text on colored background
                 color: var(--pico-primary-inverse);
                 text-decoration: none;
                 padding: 0.5rem 1rem; // Add horizontal padding to nav items
+
+                // Override Pico button colors
+                background: transparent;
+                border: 0;
+                box-shadow: none;
+
+                // Keep the button consistent with the navigation links
+                margin: 0;
+                font: inherit;
+                line-height: inherit;
+                cursor: pointer;
 
                 // Smooth transitions for interactive states
                 transition: opacity 0.2s ease-in-out;
 
                 // Hover state
                 &:hover {
+                    color: var(--pico-primary-inverse);
                     opacity: 0.8;
                 }
 
                 // Focus state for accessibility
                 &:focus-visible {
+                    color: var(--pico-primary-inverse);
                     outline: 2px solid var(--pico-primary-inverse);
                     outline-offset: 2px;
+                    box-shadow: none;
                 }
             }
         }
@@ -55,12 +70,23 @@ nav.site-nav {
             color: var(--pico-primary-inverse);
 
             a {
+                color: var(--pico-primary-inverse);
                 &:hover {
                     opacity: 0.8;
                 }
             }
         }
     }
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle svg {
+  display: block;
 }
 
 // Bordered content containers for visual separation
