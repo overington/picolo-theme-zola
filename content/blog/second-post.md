@@ -14,23 +14,23 @@ Shortcodes are snippets of code that expand into HTML when your site is built. T
 
 This theme includes a `note` shortcode for highlighting important information. Here's how to use it:
 
-{% note(title="Pro Tip") %}
+{% <ui.note title="Pro Tip"> %}
 You can use the note shortcode to draw attention to important information, tips, warnings, or any content that deserves special emphasis.
-{% end %}
+{% </ui.note> %}
 
 ## Another Example
 
-{% note(title="Did You Know?") %}
+{% <ui.note title="Did You Know?"> %}
 PicoCSS automatically styles the `<aside>` element, which is what this shortcode uses. This means the note boxes automatically adapt to light and dark mode without any extra styling!
-{% end %}
+{% </ui.note> %}
 
 ## Without a Title
 
 You can also use the shortcode without a title:
 
-{% note() %}
+{% <ui.note> %}
 This is a note without a title. It's useful for simple callouts that don't need a heading.
-{% end %}
+{% </ui.note> %}
 
 ## How It Works
 
@@ -40,6 +40,6 @@ The shortcode is defined in `templates/shortcodes/note.html` and uses PicoCSS's 
 
 Want to add your own shortcodes? Just create a new HTML file in the `templates/shortcodes/` directory and use it in your content!
 
-{% note(title="Learn More") %}
+{% <ui.note title="Learn More"> %}
 Check out the [Zola documentation on shortcodes](https://www.getzola.org/documentation/content/shortcodes/) to learn how to create your own custom components.
-{% end %}
+{% </ui.note> %}
