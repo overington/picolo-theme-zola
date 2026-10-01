@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% import "macros.html" as macros %}
 
 {% block title %}{{ section.title }} | {{ super() }}{% endblock %}
 
@@ -18,7 +17,7 @@
 {% if section.paginate_by %}
 {% for page in paginator.pages %}
 <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
-{{ macros::post_meta(page=page) }}
+{{ <ui.post_meta /> }}
 {% if page.description %}
 <p>{{ page.description }}</p>
 {% elif page.summary %}
@@ -28,12 +27,12 @@
 {% endfor %}
 
 {% if config.extra.pagination_enabled | default(value=true) %}
-{{ macros::pagination(paginator=paginator) }}
+{{ <ui.pagination /> }}
 {% endif %}
 {% else %}
 {% for page in section.pages %}
 <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
-{{ macros::post_meta(page=page) }}
+{{ <ui.post_meta /> }}
 {% if page.description %}
 <p>{{ page.description }}</p>
 {% endif %}

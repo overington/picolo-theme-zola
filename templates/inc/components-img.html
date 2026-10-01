@@ -1,0 +1,4 @@
+{% component img.resize(src: string, alt:string) %}
+  {% set image = resize_image(path=src, width=750, op="fit_width", format="webp") %}
+<img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{alt}}"/>
+{% endcomponent img.resize %}

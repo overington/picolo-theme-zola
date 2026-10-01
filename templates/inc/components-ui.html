@@ -1,5 +1,5 @@
-{# Pagination macro for blog listings #}
-{% macro pagination(paginator) %}
+{# Pagination component for blog listings #}
+{% component ui.pagination(@paginator: map) %}
     {% if paginator.number_pagers > 1 %}
     <nav aria-label="pagination">
         <ul>
@@ -8,9 +8,7 @@
             {% else %}
             <li><span aria-disabled="true">← Previous</span></li>
             {% endif %}
-
             <li><span>Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span></li>
-
             {% if paginator.next %}
             <li><a href="{{ paginator.next }}" rel="next">Next →</a></li>
             {% else %}
@@ -19,10 +17,10 @@
         </ul>
     </nav>
     {% endif %}
-{% endmacro pagination %}
+{% endcomponent ui.pagination %}
 
 {# Post metadata display macro #}
-{% macro post_meta(page) %}
+{% component ui.post_meta(@page: map) %}
     {% if page.date %}
     <p>
         <small>
@@ -33,4 +31,13 @@
         </small>
     </p>
     {% endif %}
-{% endmacro post_meta %}
+{% endcomponent ui.post_meta %}
+
+{% component ui.note(title: string = '') %}
+<aside>
+    {% if title %}
+    <strong>{{ title }}</strong><br>
+    {% endif %}
+    {{ body | markdown | safe }}
+</aside>
+{% endcomponent ui.note %}

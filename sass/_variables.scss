@@ -2,7 +2,8 @@
 // Customize PicoCSS defaults by overriding CSS variables
 // See: https://picocss.com/docs/css-variables
 
-:root {
+:root,
+:host {
     // Typography
     // --pico-font-size: 100%;
     // --pico-line-height: 1.5;
@@ -29,7 +30,8 @@
 
 // Dark mode overrides
 @media only screen and (prefers-color-scheme: dark) {
-    :root {
+    :root,
+    :host {
         // Colors (Dark mode)
         // Uncomment and customize as needed
         // --pico-primary: #1095c1;

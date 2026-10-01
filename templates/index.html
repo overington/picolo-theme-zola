@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% import "macros.html" as macros %}
 
 {% block content %}
 {{ section.content | safe }}
@@ -11,9 +10,9 @@
 <section>
     <h2>{{ config.extra.homepage_section_title | default(value="Recent Posts") }}</h2>
     {% set post_limit = config.extra.homepage_section_limit | default(value=5) %}
-    {% for page in blog_section.pages | slice(end=post_limit) %}
+    {% for page in blog_section.pages[:post_limit] %}
     <h3><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
-    {{ macros::post_meta(page=page) }}
+    {{ <ui.post_meta /> }}
     {% if page.description %}
     <p>{{ page.description }}</p>
     {% endif %}
