@@ -1,4 +1,12 @@
 // Site navigation styling.
+:root {
+    --site-nav-height: 4.5rem;
+}
+@media (max-width: 767px) {
+    :root {
+        --site-nav-height: 7rem;
+    }
+}
 
 header:has(nav.site-nav) {
     // Apply theme primary color as background

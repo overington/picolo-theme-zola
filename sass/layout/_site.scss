@@ -1,5 +1,16 @@
 // Site-wide layout and containers.
 
+:root {
+    --site-nav-height: 4.5rem;
+}
+
+@media (max-width: 767px) {
+    :root {
+        --site-nav-height: 7rem;
+    }
+}
+
+
 // Bordered content containers for visual separation
 body main,
 body footer.container {

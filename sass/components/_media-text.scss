@@ -3,6 +3,7 @@
     grid-template-columns: 1fr;
     gap: var(--pico-grid-column-gap);
     align-items: center;
+    min-height: var(--media-text-height, 0px);
 }
 
 .media-text__image {
@@ -15,7 +16,7 @@
     height: auto;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: var(--pico-border-radius);
+    // border-radius: var(--pico-border-radius);
 }
 
 .media-text__content > :first-child {

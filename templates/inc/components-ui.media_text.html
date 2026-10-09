@@ -5,21 +5,35 @@
     position: string = 'left',
     image_width: integer = 640,
     image_height: integer = 480,
+    height: string = 'auto',
     alt: string = '',
     class_name: string = ''
-) %}
+) -%}
+{% set resolved_height = height %}
+
+{% if height == 'header' %}
+{% set resolved_height = 'calc(100svh - var(--site-nav-height))' %}
+{% elif height == 'full' or height == 'full-height' or height == 'max' %}
+{% set resolved_height = '100svh' %}
+{% endif %}
+
 {% set image = resize_image(
-    path=path,
-    width=image_width,
-    height=image_height,
-    op="fill"
+path=path,
+width=image_width,
+height=image_height,
+op="fill"
 ) %}
 
 {% set position_class = 'media-text--left' %}
 {% if position == 'right' %}
 {% set position_class = 'media-text--right' %}
 {% endif %}
-<div class="media-text {{ position_class }}{% if class_name %} {{ class_name }}{% endif %}">
+<div
+class="media-text {{ position_class }}{% if class_name %} {{ class_name }}{% endif %}"
+{% if resolved_height != 'auto' %}
+style="--media-text-height: {{ resolved_height }};"
+{% endif %}
+>
 <figure class="media-text__image">
 <img
     src="{{ image.url }}"
