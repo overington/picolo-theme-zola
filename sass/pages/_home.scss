@@ -1,0 +1,44 @@
+// Home page styling.
+
+.home-intro .home-intro-text p {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    font-weight: 300;
+    color: var(--pico-muted-color);
+    margin-bottom: 1rem;
+}
+
+/* One column by default (below 768px) */
+.home-intro.grid {
+  grid-template-columns: 1fr;
+}
+
+.hero-band {
+    padding-block: calc(var(--pico-block-spacing-vertical) * 2);
+    // background:
+    //     radial-gradient(
+    //         circle at right,
+    //         var(--pico-primary),
+    //         transparent
+    //     ),
+    //     radial-gradient(
+    //         circle at left,
+    //         var(--header-colour-start),
+    //         transparent
+    //     );
+}
+
+/* Two columns from Pico's medium breakpoint upward */
+@media (min-width: 768px) {
+  .home-intro.grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /*
+   * When the final item is also an odd-numbered item,
+   * it is unpaired, so span both columns.
+   */
+  .home-intro.grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}

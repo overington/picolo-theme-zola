@@ -1,0 +1,47 @@
+// Site-wide layout and containers.
+
+// Bordered content containers for visual separation
+main.container,
+footer.container {
+    // Subtle vertical borders on left and right
+    // border-left: 1px solid var(--pico-muted-border-color);
+    // border-right: 1px solid var(--pico-muted-border-color);
+
+    // Increased padding for breathing room inside bordered area
+    // padding-left: calc(var(--pico-block-spacing-horizontal) * 1.5);
+    // padding-right: calc(var(--pico-block-spacing-horizontal) * 1.5);
+    padding-top: var(--pico-block-spacing-vertical);
+    padding-bottom: var(--pico-block-spacing-vertical);
+}
+
+// Footer with full-width background and top border
+footer.container {
+    position: relative;
+    border-top: 1px solid var(--pico-muted-border-color);
+    background-color: var(--pico-muted-border-color);
+
+
+    // Full-width background using pseudo-element
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        z-index: -1;
+    }
+}
+
+// Ensure footer stays at bottom
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+}

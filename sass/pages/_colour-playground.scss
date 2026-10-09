@@ -1,0 +1,98 @@
+// Colour preview set
+#colour-playground {
+  margin-block: 2rem;
+  padding: 1.25rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-card-background-color);
+}
+
+#colour-playground > header {
+  margin-bottom: 1rem;
+}
+
+#colour-playground > header h2 {
+  margin-bottom: 0.5rem;
+}
+
+.colour-playground__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.colour-playground__hint {
+  margin: 0;
+  color: var(--pico-muted-color);
+  font-size: 0.875rem;
+}
+
+.colour-playground__controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.colour-playground__control {
+  padding: 0.75rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+}
+
+.colour-playground__control label {
+  display: grid;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.colour-playground__control label code {
+  color: var(--pico-muted-color);
+  font-size: 0.75rem;
+}
+
+.colour-playground__inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.colour-playground__inputs input[type="text"] {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  margin: 0;
+}
+
+.colour-playground__inputs input[type="color"] {
+  flex: 0 0 2.75rem;
+  width: 2.75rem;
+  height: 2.5rem;
+  margin: 0;
+  padding: 0.2rem;
+}
+
+.colour-playground__swatch {
+  display: block;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: 50%;
+  background-color: var(--colour-playground-value);
+}
+
+.colour-playground__copy-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+#colour-playground-copy-status {
+  color: var(--pico-muted-color);
+  font-size: 0.875rem;
+}

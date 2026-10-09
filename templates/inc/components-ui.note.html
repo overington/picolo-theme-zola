@@ -1,0 +1,8 @@
+{% component ui.note(title: string = '') %}
+<aside>
+    {% if title %}
+    <strong>{{ title }}</strong><br>
+    {% endif %}
+    {{ body | markdown | safe }}
+</aside>
+{% endcomponent ui.note %}

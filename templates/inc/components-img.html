@@ -1,7 +1,9 @@
-{% component img.resize(src: string, alt:string) %}
-  {% set image = resize_image(path=src, width=750, op="fit_width", format="webp") %}
-<img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{alt}}"/>
-{% endcomponent img.resize %}
+{% component img.resize(src: string, alt: string) -%}
+{% set image = resize_image(path=src, width=750, op="fit_width", format="webp") %}
+<img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}">
+{%- endcomponent img.resize %}
+
+
 
 {# Resize an image to fit within maximum dimensions without cropping or upscaling #}
 {% component ui.image_fit(
@@ -11,20 +13,20 @@
     alt: string = '',
     class_name: string = '',
     loading: string = 'lazy'
+) -%}
+{% set image = resize_image(
+    path=path,
+    width=max_width,
+    height=max_height,
+    op="fit"
 ) %}
-    {% set image = resize_image(
-        path=path,
-        width=max_width,
-        height=max_height,
-        op="fit"
-    ) %}
 <img
-    src="{{ image.url }}"
-    width="{{ image.width }}"
-    height="{{ image.height }}"
-    alt="{{ alt }}"
-    {% if class_name %}class="{{ class_name }}"{% endif %}
-    loading="{{ loading }}"
-    decoding="async"
-/>
-{% endcomponent ui.image_fit %}
+src="{{ image.url }}"
+width="{{ image.width }}"
+height="{{ image.height }}"
+alt="{{ alt }}"
+{% if class_name %}class="{{ class_name }}"{% endif %}
+loading="{{ loading }}"
+decoding="async"
+>
+{%- endcomponent ui.image_fit %}

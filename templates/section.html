@@ -3,10 +3,15 @@
 {% block title %}{{ section.title }} | {{ super() }}{% endblock %}
 
 {% block description %}
-{% if section.description %}{{ section.description }}{% else %}{{ super() }}{% endif %}
+{% if section.description %}
+{{ section.description }}
+{% else %}
+{{ super() }}
+{% endif %}
 {% endblock %}
 
 {% block content %}
+<div class="container">
 <header>
     <h1>{{ section.title }}</h1>
     {% if section.description %}
@@ -18,11 +23,13 @@
 {% for page in paginator.pages %}
 <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
 {{ <ui.post_meta /> }}
+
 {% if page.description %}
 <p>{{ page.description }}</p>
 {% elif page.summary %}
 {{ page.summary | safe }}
 {% endif %}
+
 <a href="{{ page.permalink }}">Read more →</a>
 {% endfor %}
 
@@ -33,10 +40,13 @@
 {% for page in section.pages %}
 <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
 {{ <ui.post_meta /> }}
+
 {% if page.description %}
 <p>{{ page.description }}</p>
 {% endif %}
+
 <a href="{{ page.permalink }}">Read more →</a>
 {% endfor %}
 {% endif %}
+</div>
 {% endblock content %}

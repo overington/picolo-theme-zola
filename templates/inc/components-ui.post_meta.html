@@ -1,0 +1,13 @@
+{# Post metadata display macro #}
+{% component ui.post_meta(@page: map) %}
+    {% if page.date %}
+    <p>
+        <small>
+            <time datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+            {% if page.reading_time %}
+            • {{ page.reading_time }} min read
+            {% endif %}
+        </small>
+    </p>
+    {% endif %}
+{% endcomponent ui.post_meta %}

@@ -1,0 +1,210 @@
+.hero {
+    --hero-control-color: var(--pico-primary-inverse);
+    --hero-control-background: rgb(0 0 0 / 35%);
+
+    --hero-control-hover-color: var(--pico-primary);
+    --hero-control-hover-background: var(--pico-primary-inverse);
+
+    --hero-arrow-side-hover-background: rgb(255 255 255 / 15%);
+
+    --hero-chevron-size: 0.65rem;
+    --hero-chevron-thickness: 0.15rem;
+    --hero-arrow-size: 2.5rem;
+    --hero-arrow-font-size: 1.5rem;
+    --hero-dot-size: 0.6rem;
+    --hero-dot-gap: 0.5rem;
+
+    position: relative;
+    display: grid;
+    min-height: 28rem;
+    // isolation: isolate;
+    overflow: hidden;
+    color: var(--pico-primary-inverse);
+
+    &::before {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        content: "";
+        background-color: rgb(255 255 255 / var(--hero-lighten, 0));
+        pointer-events: none;
+    }
+}
+
+
+.hero__slides {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+.hero--slider .hero__slides {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+.hero__slide {
+    position: relative;
+    flex: 0 0 100%;
+    min-height: 100%;
+    scroll-snap-align: start;
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.hero__layout {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns:
+        minmax(4rem, 15%)
+        minmax(0, 1fr)
+        minmax(4rem, 15%);
+    gap: 0;
+    align-items: stretch;
+    min-height: 100%;
+    pointer-events: none;
+}
+
+.hero__content {
+    align-self: center;
+    min-width: 0;
+    padding: clamp(2rem, 8vw, 6rem)
+        var(--pico-block-spacing-horizontal);
+    pointer-events: auto;
+}
+
+.hero__content > :first-child {
+    margin-top: 0;
+}
+
+.hero__content > :last-child {
+    margin-bottom: 0;
+}
+
+.hero__arrow-nav {
+    position: relative;
+    z-index: 3;
+    align-self: stretch;
+    width: 100%;
+    pointer-events: auto;
+}
+
+.hero__arrow {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--hero-control-color);
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        color 180ms ease;
+}
+
+.hero__arrow:hover,
+.hero__arrow:active {
+    border: 0;
+    background-color: var(--hero-arrow-side-hover-background);
+    box-shadow: none;
+    color: var(--hero-control-hover-color);
+}
+
+.hero__arrow:focus-visible {
+    border: 0;
+    outline: 2px solid var(--hero-control-color);
+    outline-offset: -0.25rem;
+    background-color: var(--hero-arrow-side-hover-background);
+}
+
+.hero__controls {
+    position: absolute;
+    z-index: 3;
+    bottom: var(--pico-block-spacing-vertical);
+    left: 50%;
+    display: flex;
+    gap: var(--hero-dot-gap);
+    transform: translateX(-50%);
+}
+
+.hero__chevron {
+    display: block;
+    width: 0.65rem;
+    height: 0.65rem;
+    border: solid currentColor;
+    border-width: 0 0.15rem 0.15rem 0;
+}
+
+.hero__chevron--left {
+    transform: rotate(135deg);
+}
+
+.hero__chevron--right {
+    transform: rotate(-45deg);
+}
+
+.hero__controls button {
+    display: grid;
+    width: var(--hero-dot-size);
+    height: var(--hero-dot-size);
+    margin: 0;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--hero-control-color);
+    border-radius: 50%;
+    background-color: var(--hero-control-background);
+    box-shadow: none;
+}
+
+.hero__controls button[aria-current="true"] {
+    background-color: var(--hero-control-color);
+    transform: scale(1.2);
+}
+
+.hero__controls button:hover,
+.hero__controls button:focus-visible {
+    background-color: var(--hero-control-hover-background);
+}
+
+.hero__controls button:focus-visible {
+    outline: 2px solid var(--hero-control-color);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__slides {
+        scroll-behavior: auto;
+        scroll-snap-type: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero__layout {
+        gap: 0.5rem;
+        padding-inline: 0.75rem;
+    }
+
+    .hero__arrow {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.25rem;
+    }
+}

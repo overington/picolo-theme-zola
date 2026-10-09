@@ -1,0 +1,10 @@
+// PicoCSS Variable Overrides
+// Customize PicoCSS defaults by overriding CSS variables
+// See: https://picocss.com/docs/css-variables
+
+:root,
+:host {
+    // Typography
+    --pico-font-family-serif: "Fraunces";
+    --pico-font-family: var(--pico-font-family-serif);
+}

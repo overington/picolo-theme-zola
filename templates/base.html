@@ -47,7 +47,7 @@
     {% endblock header %}
 
     {% block main %}
-    <main{% block main_attributes %} class="container"{% endblock main_attributes %}>
+    <main{% block main_attributes %}{% endblock main_attributes %}>
         {% block content %}{% endblock %}
     </main>
     {% endblock main %}
@@ -64,6 +64,7 @@
     {% endif %}
     <!-- Minimal theme switcher -->
     <script src="{{ get_url(path="js/minimal-theme-switcher.js") }}"></script>
+    <script src="{{ get_url(path="js/hero-slider.js") }}"></script>
 </body>
 
 </html>

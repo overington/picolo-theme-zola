@@ -1,0 +1,76 @@
+// Site navigation styling.
+
+header:has(nav.site-nav) {
+    // Apply theme primary color as background
+    // background-color: var(--pico-primary);
+    background:
+        radial-gradient(circle at right, var(--header-colour-end), transparent),
+        radial-gradient(circle at left, var(--header-colour-start), transparent);
+    // padding: 0.2rem 0; // Reduced height (was var(--pico-block-spacing-vertical))
+    // margin-bottom: 0;
+}
+
+nav.site-nav {
+
+    // Remove underlines from brand links
+    strong a {
+        color: var(--pico-primary-inverse);
+        text-decoration: none;
+        padding: 0.2rem 1rem; // Add horizontal padding
+        display: inline-block;
+    }
+
+    // Style navigation links with theme awareness
+    ul {
+        li {
+            a, button.theme-toggle {
+                // Use white/light text on colored background
+                color: var(--pico-primary-inverse);
+                text-decoration: none;
+                padding: 0.5rem 1rem; // Add horizontal padding to nav items
+
+                // Override Pico button colors
+                background: transparent;
+                border: 0;
+                box-shadow: none;
+
+                // Keep the button consistent with the navigation links
+                margin: 0;
+                font: inherit;
+                line-height: inherit;
+                cursor: pointer;
+
+                // Smooth transitions for interactive states
+                transition: opacity 0.2s ease-in-out;
+
+                // Hover state
+                &:hover {
+                    color: var(--pico-primary);
+                    opacity: 0.8;
+                }
+
+                // Focus state for accessibility
+                &:focus-visible {
+                    color: var(--pico-primary-inverse);
+                    outline: 2px solid var(--pico-primary-inverse);
+                    outline-offset: 2px;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+
+    // Brand styling (left list)
+    ul:first-child {
+        strong {
+            color: var(--pico-primary-inverse);
+
+            a {
+                color: var(--pico-primary-inverse);
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}

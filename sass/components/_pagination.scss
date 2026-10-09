@@ -1,0 +1,45 @@
+// Pagination styling - centered with consistent spacing
+
+nav[aria-label="pagination"] {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    justify-self: center;
+
+    ul {
+        display: inline-flex; // Changed from flex to inline-flex
+        justify-content: center; // Center-align all controls
+        align-items: center;
+        gap: 0.5rem; // Compact spacing between items
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        min-height: 2.5rem; // Prevent vertical jumps
+
+        li {
+            margin: 0;
+
+            // Fixed width for Previous/Next buttons to ensure centering
+            a, span[aria-disabled="true"] {
+                min-width: 5rem;
+                display: inline-block;
+                text-align: center;
+            }
+
+            // Disabled button styling
+            span[aria-disabled="true"] {
+                opacity: 0.4;
+                cursor: not-allowed;
+                user-select: none;
+            }
+
+            // Page indicator styling (middle element)
+            span:not([aria-disabled]) {
+                display: inline-block;
+                min-width: 5.5rem; // Prevent shifts when text changes
+                text-align: center;
+                font-weight: 500;
+                color: var(--pico-muted-color);
+            }
+        }
+    }
+}
