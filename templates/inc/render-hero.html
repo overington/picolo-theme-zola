@@ -1,0 +1,62 @@
+{% if hero_source.extra.hero %}
+{% set hero = hero_source.extra.hero %}
+
+{% if hero.images and hero.images | length > 0 %}
+{% set hero_title = hero_source.title | default(value='') %}
+{% set hero_description = hero_source.description | default(value='') %}
+
+{# Values in [extra.hero] override page/section values when supplied. #}
+{% if hero.title %}
+{% set hero_title = hero.title %}
+{% endif %}
+
+{% if hero.description %}
+{% set hero_description = hero.description %}
+{% endif %}
+
+{% set include_title = false %}
+{% set include_description = false %}
+
+{% if hero.use_title | default(value=false) and hero_title %}
+{% set include_title = true %}
+{% endif %}
+
+{% if hero.use_description | default(value=false) and hero_description %}
+{% set include_description = true %}
+{% endif %}
+
+{% if include_title or include_description %}
+{% <ui.hero
+images={hero.images}
+id={hero.id | default(value="page-hero")}
+image_width={hero.image_width | default(value=1600)}
+image_height={hero.image_height | default(value=720)}
+height={hero.height | default(value="auto")}
+slider={hero.slider | default(value=false)}
+lighten={hero.lighten | default(value=0.2)}
+class_name={hero.class_name | default(value="")}
+> %}
+
+{% if include_title %}
+<h1>{{ hero_title }}</h1>
+{% endif %}
+
+{% if include_description %}
+<h2>{{ hero_description | markdown | safe }}</h2>
+{% endif %}
+
+{% </ui.hero> %}
+{% else %}
+{{ <ui.hero
+images={hero.images}
+id={hero.id | default(value="page-hero")}
+image_width={hero.image_width | default(value=1600)}
+image_height={hero.image_height | default(value=720)}
+height={hero.height | default(value="auto")}
+slider={hero.slider | default(value=false)}
+lighten={hero.lighten | default(value=0.2)}
+class_name={hero.class_name | default(value="")}
+/> }}
+{% endif %}
+{% endif %}
+{% endif %}

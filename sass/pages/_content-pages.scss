@@ -1,0 +1,54 @@
+.page-header {
+    padding-block: clamp(2rem, 6vw, 5rem);
+    padding-inline: var(--pico-block-spacing-horizontal);
+    text-align: center;
+}
+
+.page-header > :first-child {
+    margin-top: 0;
+}
+
+.page-header > :last-child {
+    margin-bottom: 0;
+}
+
+.page-header h1 {
+    margin-bottom: 0.75rem;
+}
+
+.page-header + .post-list {
+    margin-top: var(--pico-block-spacing-vertical);
+}
+
+.page-description > :first-child {
+    margin-top: 0;
+}
+
+.page-description > :last-child {
+    margin-bottom: 0;
+}
+
+.section {
+    .post-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .post-preview {
+        list-style: none;
+
+        .post-title {
+            margin-bottom: 0;
+            font-size: 1.2rem;
+        }
+
+        .post-date {
+            font-style: italic;
+        }
+
+        .post-description {
+            font-size: 0.8rem;
+        }
+    }
+}

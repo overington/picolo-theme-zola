@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block content %}
-{{ section.content | safe }}
+{% block hero %}
+{% set hero_source = section %}
+{% include "inc/render-hero.html" %}
+{% endblock hero %}
 
-{% if config.extra.show_homepage_section and config.extra.homepage_section %}
-{% set section_path = config.extra.homepage_section ~ "/_index.md" %}
-{% set blog_section = get_section(path=section_path) %}
-{% if blog_section %}
-<section>
-    <h2>{{ config.extra.homepage_section_title | default(value="Recent Posts") }}</h2>
-    {% set post_limit = config.extra.homepage_section_limit | default(value=5) %}
-    {% for page in blog_section.pages[:post_limit] %}
-    <h3><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
-    {{ <ui.post_meta /> }}
-    {% if page.description %}
-    <p>{{ page.description }}</p>
-    {% endif %}
-    {% endfor %}
-    <p><a href="{{ blog_section.permalink }}" role="button">{{ config.extra.homepage_section_button_text | default(value="View all posts →") }}</a></p>
-</section>
+{% block content %}
+{% if not section.extra.hero %}
+<header class="container page-header">
+<h1>{{ section.title }}</h1>
+
+{% if section.description %}
+<div class="page-description">
+{{ section.description | markdown | safe }}
+</div>
 {% endif %}
+</header>
 {% endif %}
+
+<div class="home-page-content">
+{{ section.content | safe }}
+</div>
 {% endblock content %}

@@ -63,21 +63,33 @@
 }
 
 .hero__layout {
+    --hero-side-column: minmax(1rem, 25%);
+
     position: relative;
     z-index: 2;
     display: grid;
     grid-template-columns:
-        minmax(4rem, 15%)
-        minmax(0, 1fr)
-        minmax(4rem, 15%);
+            var(--hero-side-column)
+            minmax(0, 1fr)
+            var(--hero-side-column);
     gap: 0;
     align-items: stretch;
     min-height: 100%;
     pointer-events: none;
 }
 
+.hero__layout--content-only {
+    grid-template-columns:
+        minmax(4rem, 15%)
+        minmax(0, 1fr)
+        minmax(4rem, 15%);
+}
+.hero__layout--content-only .hero__content {
+    grid-column: 2;
+}
+
 .hero__content {
-    align-self: center;
+    // align-self: center;
     min-width: 0;
     padding: clamp(2rem, 8vw, 6rem)
         var(--pico-block-spacing-horizontal);

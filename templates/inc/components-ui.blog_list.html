@@ -1,0 +1,12 @@
+{# Post metadata display macro #}
+{% component ui.date(@page: map) %}
+{% if page.date %}
+<time datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+{% endif %}
+{% endcomponent ui.date %}
+
+{% component ui.reading_time(@page: map) %}
+{% if page.reading_time %}
+<span>{{ page.reading_time }} min read</span>
+{% endif %}
+{% endcomponent ui.reading_time %}

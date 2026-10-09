@@ -25,7 +25,7 @@ site_author = "Your Name"
 site_description = "A minimal blog built with Zola and PicoCSS"
 
 # Homepage settings
-show_homepage_section = false  # Set to true to display a section on homepage
+# show_homepage_section =   # Set to true to display a section on homepage
 #homepage_section = "blog"  # Required if show_homepage_section = true (e.g., "blog" or "posts")
 #homepage_section_title = "Recent Posts"  # Optional: Title for the section
 #homepage_section_limit = 5  # Optional: Number of posts to display

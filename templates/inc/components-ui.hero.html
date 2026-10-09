@@ -38,8 +38,9 @@ style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }};"
 </div>
 
 {% if body or (slider and images | length > 1) %}
-<div class="hero__layout">
-{% if slider and images | length > 1 %}
+{% set has_arrows = slider and images | length > 1 %}
+<div class="hero__layout{% if not has_arrows %} hero__layout--content-only{% endif %}">
+{% if has_arrows %}
 <nav class="hero__arrow-nav hero__arrow-nav--previous" aria-label="Previous image" >
 <button type="button" class="hero__arrow" data-hero-previous aria-label="Previous image" >
 <span class="hero__chevron hero__chevron--left" aria-hidden="true" ></span>
@@ -47,13 +48,13 @@ style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }};"
 </nav>
 {% endif %}
 
-<div class="hero__content">
 {% if body %}
+<div class="hero__content">
 {{ body | markdown | safe }}
-{% endif %}
 </div>
+{% endif %}
 
-{% if slider and images | length > 1 %}
+{% if has_arrows %}
 <nav class="hero__arrow-nav hero__arrow-nav--next" aria-label="Next image" >
 <button type="button" class="hero__arrow" data-hero-next aria-label="Next image" >
 <span class="hero__chevron hero__chevron--right" aria-hidden="true" ></span>
@@ -63,7 +64,7 @@ style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }};"
 </div>
 {% endif %}
 
-{% if slider and images | length > 1 %}
+{% if has_arrows %}
 <nav class="hero__controls" aria-label="Choose hero image">
 {% for path in images %}
 <button type="button" data-hero-slide-control="{{ loop.index0 }}" {% if loop.first %} aria-current="true" {% else %} aria-current="false" {% endif %} aria-label="Show image {{ loop.index }}" >

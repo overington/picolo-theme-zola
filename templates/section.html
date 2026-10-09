@@ -10,43 +10,57 @@
 {% endif %}
 {% endblock %}
 
+{% block hero %}
+{% set hero_source = section %}
+{% include "inc/render-hero.html" %}
+{% endblock hero %}
+
 {% block content %}
-<div class="container">
-<header>
-    <h1>{{ section.title }}</h1>
-    {% if section.description %}
-    <p>{{ section.description | markdown(inline=true) | safe }}</p>
-    {% endif %}
+<section class="container section section-blog" aria-labelledby="section-title">
+<header class="page-header">
+<h1 id="section-title">{{ section.title }}</h1>
+
+{% if section.description %}
+<div class="page-description">
+{{ section.description | markdown | safe }}
+</div>
+{% endif %}
 </header>
 
 {% if section.paginate_by %}
-{% for page in paginator.pages %}
-<h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
-{{ <ui.post_meta /> }}
-
-{% if page.description %}
-<p>{{ page.description }}</p>
-{% elif page.summary %}
-{{ page.summary | safe }}
+{% set pages = paginator.pages %}
+{% else %}
+{% set pages = section.pages %}
 {% endif %}
 
-<a href="{{ page.permalink }}">Read more →</a>
-{% endfor %}
+<ul class="post-list">
+{% for page in pages %}
+<li class="post-preview">
+<small class="post-date">{{ <ui.date /> }}</small>
 
-{% if config.extra.pagination_enabled | default(value=true) %}
+<p class="post-title">
+<a href="{{ page.permalink }}">{{ page.title }}</a>
+</p>
+
+{% if page.description %}
+<p class="post-description">
+{{ page.description }}
+&middot;
+(<a href="{{ page.permalink }}">{{ <ui.reading_time /> }}</a>)
+</p>
+{% elif page.summary %}
+<p class="post-description">
+{{ page.summary | safe }}
+&middot;
+(<a href="{{ page.permalink }}">{{ <ui.reading_time /> }}</a>)
+</p>
+{% endif %}
+</li>
+{% endfor %}
+</ul>
+
+{% if section.paginate_by and config.extra.pagination_enabled | default(value=true) %}
 {{ <ui.pagination /> }}
 {% endif %}
-{% else %}
-{% for page in section.pages %}
-<h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
-{{ <ui.post_meta /> }}
-
-{% if page.description %}
-<p>{{ page.description }}</p>
-{% endif %}
-
-<a href="{{ page.permalink }}">Read more →</a>
-{% endfor %}
-{% endif %}
-</div>
+</section>
 {% endblock content %}
