@@ -1,17 +1,15 @@
 // Site-wide layout and containers.
 
 // Bordered content containers for visual separation
-main.container,
-footer.container {
-    // Subtle vertical borders on left and right
-    // border-left: 1px solid var(--pico-muted-border-color);
-    // border-right: 1px solid var(--pico-muted-border-color);
-
-    // Increased padding for breathing room inside bordered area
-    // padding-left: calc(var(--pico-block-spacing-horizontal) * 1.5);
-    // padding-right: calc(var(--pico-block-spacing-horizontal) * 1.5);
-    padding-top: var(--pico-block-spacing-vertical);
-    padding-bottom: var(--pico-block-spacing-vertical);
+body main,
+body footer.container {
+        // Increased padding for breathing room inside bordered area
+        padding-top: 0; // was var(--pico-block-spacing-vertical);
+        padding-bottom: 0; // was var(--pico-block-spacing-vertical);
+}
+section {
+    margin-top: 0; //var(--pico-block-spacing-vertical);
+    margin-bottom: 0; // var(--pico-block-spacing-vertical);
 }
 
 // Footer with full-width background and top border
