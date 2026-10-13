@@ -1,3 +1,8 @@
+article.page {
+    --pico-card-box-shadow: none;
+    --pico-card-sectioning-background-color: var(--pico-background-color);
+}
+
 .page-header {
     padding-block: clamp(2rem, 6vw, 5rem);
     padding-inline: var(--pico-block-spacing-horizontal);

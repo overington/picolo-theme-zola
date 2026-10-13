@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} | {{ super() }}{% endblock %}
+
+{% block description %}
+{% if page.description %}
+{{ page.description }}
+{% else %}
+{{ super() }}
+{% endif %}
+{% endblock description %}
+
+{% block hero %}
+{% set hero_source = page %}
+{% include "inc/render-hero.html" %}
+{% endblock hero %}
+
+{% block content %}
+<article class="container page">
+<header class="page-header">
+<h1>{{ page.title }}</h1>
+
+{% if page.description %}
+<div class="page-description">
+{{ page.description | markdown | safe }}
+</div>
+{% endif %}
+
+{{ <ui.date /> }}
+{{ <ui.reading_time /> }}
+</header>
+
+<div class="page-content">
+{{ page.content | safe }}
+</div>
+</article>
+{% endblock content %}
