@@ -1,3 +1,4 @@
+
 /* Orange colour for the light colour scheme (default). */
 /* Can be forced with data-theme="light". */
 [data-theme="light"],
@@ -11,8 +12,15 @@
   --pico-primary-hover-background: #bd3c13;
   --pico-primary-focus: rgba(244, 93, 44, 0.5);
   --pico-primary-inverse: #fff;
-  --header-colour-start: #0b183b;
-  --header-colour-end: #192240;
+  --pico-card-background-color: #fff;
+
+  /* Replace these RGB values with colors sampled from your photo. */
+  // --site-nav-colour-accent:  #d38f57; /* a brighter accent */
+
+  --site-nav-text-color: #373c44;
+  --site-nav-hover-color: #bd3c13;
+  --site-nav-focus-color: #373c44;
+
 }
 
 /* Orange colour for the dark colour scheme (automatic). */
@@ -28,8 +36,16 @@
   --pico-primary-hover-background: #e74b1a;
   --pico-primary-focus: rgba(245, 107, 61, 0.375);
   --pico-primary-inverse: #fff;
-  --header-colour-start: #0b183b;
-  --header-colour-end: #192240;
+  --pico-card-background-color: rgb(19, 22.5, 30.5);
+
+  --site-nav-text-color: #fff;
+  --site-nav-hover-color: #f56b3d;
+  --site-nav-focus-color: #fff;
+//
+//   /* Replace these RGB values with colors sampled from your photo. */
+//   --site-nav-colour-shade:  #162c39;   /* a dark shadow color */
+//   --site-nav-colour-mid: #486f6c;   /* a midtone */
+//   --site-nav-colour-accent:  #d38f57; /* a brighter accent */
   }
 }
 
@@ -44,6 +60,14 @@
   --pico-primary-hover-background: #e74b1a;
   --pico-primary-focus: rgba(245, 107, 61, 0.375);
   --pico-primary-inverse: #fff;
-  --header-colour-start: #303650;
-  --header-colour-end: #030012;
+  --pico-card-background-color: rgb(19, 22.5, 30.5);
+
+  --site-nav-text-color: #fff;
+  --site-nav-hover-color: #f56b3d;
+  --site-nav-focus-color: #fff;
+//
+//   /* Replace these RGB values with colors sampled from your photo. */
+//   --site-nav-colour-shade:  #162c39;   /* a dark shadow color */
+//   --site-nav-colour-mid: #486f6c;   /* a midtone */
+//   --site-nav-colour-accent:  #d38f57; /* a brighter accent */
 }

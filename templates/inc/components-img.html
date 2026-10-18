@@ -1,5 +1,10 @@
-{% component img.resize(src: string, alt: string) -%}
-{% set image = resize_image(path=src, width=750, op="fit_width", format="webp") %}
+{% component img.resize(@config: map, src: string, alt: string) -%}
+{% set image = resize_image(
+    path=src,
+    width=config.extra.picolo.image_defaults.inline_width,
+    op="fit_width",
+    format="webp"
+) %}
 <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}">
 {%- endcomponent img.resize %}
 
@@ -7,17 +12,26 @@
 
 {# Resize an image to fit within maximum dimensions without cropping or upscaling #}
 {% component ui.image_fit(
+    @config: map,
     path: string,
-    max_width: integer,
-    max_height: integer,
+    max_width: integer = 0,
+    max_height: integer = 0,
     alt: string = '',
     class_name: string = '',
     loading: string = 'lazy'
 ) -%}
+{% set resolved_max_width = max_width %}
+{% set resolved_max_height = max_height %}
+{% if max_width == 0 %}
+{% set resolved_max_width = config.extra.picolo.image_defaults.image_fit_max_width %}
+{% endif %}
+{% if max_height == 0 %}
+{% set resolved_max_height = config.extra.picolo.image_defaults.image_fit_max_height %}
+{% endif %}
 {% set image = resize_image(
     path=path,
-    width=max_width,
-    height=max_height,
+    width=resolved_max_width,
+    height=resolved_max_height,
     op="fit"
 ) %}
 <img

@@ -1,14 +1,24 @@
 {# Responsive image/content block with a consistent image crop #}
 
 {% component ui.media_text(
+    @config: map,
     path: string,
     position: string = 'left',
-    image_width: integer = 640,
-    image_height: integer = 480,
+    image_width: integer = 0,
+    image_height: integer = 0,
     height: string = 'auto',
     alt: string = '',
     class_name: string = ''
 ) -%}
+{% set resolved_image_width = image_width %}
+{% set resolved_image_height = image_height %}
+{% if image_width == 0 %}
+{% set resolved_image_width = config.extra.picolo.image_defaults.media_text_width %}
+{% endif %}
+{% if image_height == 0 %}
+{% set resolved_image_height = config.extra.picolo.image_defaults.media_text_height %}
+{% endif %}
+
 {% set resolved_height = height %}
 
 {% if height == 'header' %}
@@ -17,7 +27,7 @@
 {% set resolved_height = '100svh' %}
 {% endif %}
 
-{% set image = resize_image( path=path, width=image_width, height=image_height, op="fill" ) %}
+{% set image = resize_image( path=path, width=resolved_image_width, height=resolved_image_height, op="fill" ) %}
 
 {% set position_class = 'media-text--left' %}
 {% if position == 'right' %}

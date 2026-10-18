@@ -29,8 +29,8 @@
 {% <ui.hero
 images={hero.images}
 id={hero.id | default(value="page-hero")}
-image_width={hero.image_width | default(value=1600)}
-image_height={hero.image_height | default(value=720)}
+image_width={hero.image_width | default(value=config.extra.picolo.image_defaults.hero_width)}
+image_height={hero.image_height | default(value=config.extra.picolo.image_defaults.hero_height)}
 height={hero.height | default(value="auto")}
 slider={hero.slider | default(value=false)}
 lighten={hero.lighten | default(value=0.2)}
@@ -50,8 +50,8 @@ class_name={hero.class_name | default(value="")}
 {{ <ui.hero
 images={hero.images}
 id={hero.id | default(value="page-hero")}
-image_width={hero.image_width | default(value=1600)}
-image_height={hero.image_height | default(value=720)}
+image_width={hero.image_width | default(value=config.extra.picolo.image_defaults.hero_width)}
+image_height={hero.image_height | default(value=config.extra.picolo.image_defaults.hero_height)}
 height={hero.height | default(value="auto")}
 slider={hero.slider | default(value=false)}
 lighten={hero.lighten | default(value=0.2)}

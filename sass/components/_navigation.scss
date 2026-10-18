@@ -1,83 +1,109 @@
+@use "sass:map";
+@use "../settings/breakpoints" as bp;
+
 // Site navigation styling.
+$site-nav-type-scale: (
+    sm: (
+        brand: 1.6rem,
+        links: 1rem,
+    ),
+    md: (
+        brand: 1.8rem,
+        links: 1.05rem,
+    ),
+    lg: (
+        brand: 2rem,
+        links: 1.1rem,
+    ),
+    xl: (
+        brand: 2.2rem,
+        links: 1.15rem,
+    ),
+    xxl: (
+        brand: 2.4rem,
+        links: 1.2rem,
+    ),
+);
+
 :root {
-    --site-nav-height: 4.5rem;
-}
-@media (max-width: 767px) {
-    :root {
-        --site-nav-height: 7rem;
+    --site-nav-height: 9rem;
+    --site-nav-brand-font-size: 1.5rem;
+    --site-nav-link-font-size: 1rem;
+
+    @each $name, $sizes in $site-nav-type-scale {
+        $breakpoint: map.get(bp.$breakpoints, $name, breakpoint);
+
+        @media (min-width: $breakpoint) {
+            --site-nav-brand-font-size: #{map.get($sizes, brand)};
+            --site-nav-link-font-size: #{map.get($sizes, links)};
+        }
     }
 }
 
 header:has(nav.site-nav) {
-    // Apply theme primary color as background
-    // background-color: var(--pico-primary);
+    min-height: var(--site-nav-height);
+    display: flex;
+    align-items: center;
+
     background:
-        radial-gradient(circle at right, var(--header-colour-end), transparent),
-        radial-gradient(circle at left, var(--header-colour-start), transparent);
-    // padding: 0.2rem 0; // Reduced height (was var(--pico-block-spacing-vertical))
-    // margin-bottom: 0;
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--pico-primary-background) 25%) 0%,
+            color-mix(in srgb, var(--pico-primary-background) 20%) 58%,
+            color-mix(in srgb, var(--pico-primary-background) 8%) 100%
+        ),
+        linear-gradient(
+            135deg,
+            // rgba(var(--site-nav-colour-mid), .42),
+            color-mix(in srgb, var(--pico-background-color) 45%),
+            transparent 70%
+        );
+    // url("/images/your-photo.jpg") center 45% / cover no-repeat;
+}
+
+nav.site-nav ul.site-nav__brand a {
+    // break-word
+    display: inline-block;
+    width: min-content;
+    line-height: 1.05;
 }
 
 nav.site-nav {
-
-    // Remove underlines from brand links
-    strong a {
-        color: var(--pico-primary-inverse);
+    ul.site-nav__brand a {
+        font-size: var(--site-nav-brand-font-size);
+        color: var(--site-nav-text-color);
         text-decoration: none;
-        padding: 0.2rem 1rem; // Add horizontal padding
-        display: inline-block;
     }
 
-    // Style navigation links with theme awareness
-    ul {
-        li {
-            a, button.theme-toggle {
-                // Use white/light text on colored background
-                color: var(--pico-primary-inverse);
-                text-decoration: none;
-                padding: 0.5rem 1rem; // Add horizontal padding to nav items
+    ul.site-nav__links {
+        li a,
+        li button.theme-toggle {
+            color: var(--site-nav-text-color);
+            text-decoration: none;
 
-                // Override Pico button colors
-                background: transparent;
-                border: 0;
-                box-shadow: none;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            margin: 0;
+            font: inherit;
+            font-size: var(--site-nav-link-font-size);
+            line-height: inherit;
+            cursor: pointer;
+            transition:
+                color 0.2s ease-in-out,
+                opacity 0.2s ease-in-out;
 
-                // Keep the button consistent with the navigation links
-                margin: 0;
-                font: inherit;
-                line-height: inherit;
-                cursor: pointer;
-
-                // Smooth transitions for interactive states
-                transition: opacity 0.2s ease-in-out;
-
-                // Hover state
-                &:hover {
-                    color: var(--pico-primary);
-                    opacity: 0.8;
-                }
-
-                // Focus state for accessibility
-                &:focus-visible {
-                    color: var(--pico-primary-inverse);
-                    outline: 2px solid var(--pico-primary-inverse);
-                    outline-offset: 2px;
-                    box-shadow: none;
-                }
+            &:hover {
+                color: var(--site-nav-hover-color);
+                opacity: 0.8;
             }
-        }
-    }
 
-    // Brand styling (left list)
-    ul:first-child {
-        strong {
-            color: var(--pico-primary-inverse);
-
-            a {
-                color: var(--pico-primary-inverse);
-                &:hover {
-                    opacity: 0.8;
-                }
+            &:focus-visible {
+                color: var(--site-nav-focus-color);
+                outline: 2px solid var(--site-nav-focus-color);
+                outline-offset: 2px;
+                box-shadow: none;
             }
         }
     }

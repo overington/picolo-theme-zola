@@ -29,16 +29,15 @@
     <header>
         <div class="container">
         <nav class="site-nav">
-            <ul>
+            <ul class="site-nav__brand">
                 <li><strong><a href="/">{{ config.title }}</a></strong></li>
             </ul>
             {% if config.extra.show_nav %}
-            <ul>
+            <ul class="site-nav__links">
                 {% for item in config.extra.nav_items %}
                 <li><a href="{{ item.path }}">{{ item.name }}</a></li>
                 {% endfor %}
                 <li>{% include "inc/theme-toggle.html" %}</li>
-
             </ul>
             {% endif %}
         </nav>

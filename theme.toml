@@ -28,3 +28,14 @@ nav_items = [
 
 # Footer
 footer_text = "Built with Zola & PicoCSS"
+
+# Image resize defaults. Override these under [extra.picolo.image_defaults]
+# in the site's zola.toml.
+[extra.picolo.image_defaults]
+inline_width = 1200
+image_fit_max_width = 1600
+image_fit_max_height = 1600
+hero_width = 1600
+hero_height = 720
+media_text_width = 1200
+media_text_height = 900

@@ -1,13 +1,23 @@
 {% component ui.hero(
+    @config: map,
     images: array,
     id: string = 'hero',
-    image_width: integer = 1600,
-    image_height: integer = 720,
+    image_width: integer = 0,
+    image_height: integer = 0,
     height: string = 'auto',
     slider: bool = false,
     lighten: float = 0.2,
     class_name: string = ''
 ) -%}
+{% set resolved_image_width = image_width %}
+{% set resolved_image_height = image_height %}
+{% if image_width == 0 %}
+{% set resolved_image_width = config.extra.picolo.image_defaults.hero_width %}
+{% endif %}
+{% if image_height == 0 %}
+{% set resolved_image_height = config.extra.picolo.image_defaults.hero_height %}
+{% endif %}
+
 {% set resolved_height = height %}
 
 {% if height == 'header' %}
@@ -26,8 +36,8 @@ style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }};"
 {% if slider or loop.first %}
 {% set image = resize_image(
     path=path,
-    width=image_width,
-    height=image_height,
+    width=resolved_image_width,
+    height=resolved_image_height,
     op="fill"
 ) %}
 <div class="hero__slide" data-hero-slide="{{ loop.index0 }}">

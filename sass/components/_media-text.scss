@@ -1,13 +1,63 @@
+@use "sass:map";
+@use "../settings/breakpoints" as bp;
+
+$media-text-type-scale: (
+  p: 1,
+  h1: 2.4,
+  h2: 2,
+  h3: 1.7,
+  h4: 1.4,
+  h5: 1.15,
+  h6: 1
+);
+
+$media-text-options: (
+  sm: (margin-block: 1rem 0, content-padding: 1rem, paragraph-base: 1rem, heading-base: 1.05rem),
+  md: (margin-block: 1.5rem, content-padding: 0.75rem, paragraph-base: 1.05rem, heading-base: 1.1rem),
+  lg: (margin-block: 2rem, content-padding: 1rem, paragraph-base: 1.1rem, heading-base: 1.15rem),
+  xl: (margin-block: 2.25rem, content-padding: 3rem, paragraph-base: 1.15rem, heading-base: 1.25rem),
+  xxl: (margin-block: 2.5rem, content-padding: 3.5rem, paragraph-base: 1.2rem, heading-base: 3rem)
+);
+
+$media-text-grid-breakpoint: map.get(bp.$breakpoints, md, breakpoint);
+
 .media-text {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--pico-grid-column-gap);
     align-items: center;
     min-height: var(--media-text-height, 0px);
+
+    --media-text-margin-block: 1rem 0;
+    --media-text-content-padding: 1rem;
+
+    @each $type, $multiplier in $media-text-type-scale {
+        --media-text-#{$type}-font-size: #{1rem * $multiplier};
+    }
+
+    @each $name, $options in $media-text-options {
+        $breakpoint: map.get(bp.$breakpoints, $name, breakpoint);
+        $paragraph-base: map.get($options, paragraph-base);
+        $heading-base: map.get($options, heading-base);
+
+        @media (min-width: $breakpoint) {
+            --media-text-margin-block: #{map.get($options, margin-block)};
+            --media-text-content-padding: #{map.get($options, content-padding)};
+
+            @each $type, $multiplier in $media-text-type-scale {
+                @if $type == p {
+                    --media-text-p-font-size: #{$paragraph-base * $multiplier};
+                } @else {
+                    --media-text-#{$type}-font-size: #{$heading-base * $multiplier};
+                }
+            }
+        }
+    }
 }
 
 .media-text__image {
     margin: 0;
+    overflow: hidden;
 }
 
 .media-text__image img {
@@ -16,6 +66,8 @@
     height: auto;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+    transform: scale(1.08);
+    transform-origin: center;
 }
 
 .media-text--header-height .media-text__image {
@@ -31,6 +83,16 @@
     object-position: center;
 }
 
+.media-text__content {
+    margin-block: var(--media-text-margin-block);
+    padding-inline: var(--media-text-content-padding);
+}
+
+@each $type in map.keys($media-text-type-scale) {
+    .media-text__content #{$type} {
+        font-size: var(--media-text-#{$type}-font-size);
+    }
+}
 .media-text__content > :first-child {
     margin-top: 0;
 }
@@ -39,9 +101,28 @@
     margin-bottom: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: $media-text-grid-breakpoint) {
     .media-text {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: stretch;
+    }
+
+    .media-text__image {
+        align-self: stretch;
+        height: auto;
+    }
+
+    .media-text--header-height .media-text__image {
+        height: auto;
+    }
+
+    .media-text__image img {
+        height: 100%;
+        aspect-ratio: auto;
+    }
+
+    .media-text__content {
+        align-self: center;
     }
 
     .media-text--right .media-text__image {
