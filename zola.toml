@@ -1,6 +1,6 @@
 # The URL the site will be built for
-base_url = "https://example.com"
-title = "picolo"
+base_url = "https://samueloverington.com"
+title = "picolo theme"
 description = "A minimal blog theme built with Zola and PicoCSS"
 
 # Whether to automatically compile all Sass files in the sass directory

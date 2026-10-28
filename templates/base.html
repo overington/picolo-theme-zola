@@ -7,50 +7,46 @@
     <title>{% block title %}{{ config.title }}{% endblock %}</title>
     <meta name="description" content="{% block description %}{{ config.description | default(value=config.extra.site_description) }}{% endblock %}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-
-    {% block meta %}{% endblock %}
-
-    {# PicoCSS from CDN #}
-    {% if config.extra.pico_use_cdn %}
-        {% if config.extra.pico_theme and config.extra.pico_theme != "default" %}
+    {%- block meta %}{% endblock %}
+    {#- PicoCSS from CDN #}
+    {%- if config.extra.pico_use_cdn -%}
+        {%- if config.extra.pico_theme and config.extra.pico_theme != "default" -%}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@{{ config.extra.pico_cdn_version | default(value="2") }}/css/pico.{{ config.extra.pico_theme }}.min.css">
-        {% else %}
+        {%- else -%}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@{{ config.extra.pico_cdn_version | default(value="2") }}/css/pico.min.css">
-        {% endif %}
-    {% endif %}
-
-    {# Compiled custom styles #}
+        {%- endif -%}
+    {%- endif -%}
+    {#- Compiled custom styles #}
     <link rel="stylesheet" href="{{ get_url(path="main.css") }}">
-
-    {% block extra_head %}{% endblock %}
+    {%- block extra_head %}{% endblock %}
 </head>
 <body>
-    {% block header %}
+    {%- block header %}
     <header>
         <div class="container">
-        <nav class="site-nav">
-            <ul class="site-nav__brand">
-                <li><strong><a href="/">{{ config.title }}</a></strong></li>
-            </ul>
-            {% if config.extra.show_nav %}
-            <ul class="site-nav__links">
-                {% for item in config.extra.nav_items %}
-                <li><a href="{{ item.path }}">{{ item.name }}</a></li>
-                {% endfor %}
-                <li>{% include "inc/theme-toggle.html" %}</li>
-            </ul>
-            {% endif %}
-        </nav>
-    </div>
+            <nav class="site-nav">
+                <ul class="site-nav__brand">
+                    <li><strong><a href="/">{{ config.title }}</a></strong></li>
+                </ul>
+                {%- if config.extra.show_nav %}
+                <ul class="site-nav__links">
+                    {%- for item in config.extra.nav_items %}
+                    <li><a href="{{ item.path }}">{{ item.name }}</a></li>
+                    {%- endfor %}
+                    <li>{%- include "inc/theme-toggle.html" %}</li>
+                </ul>
+                {%- endif %}
+            </nav>
+        </div>
     </header>
-    {% endblock header %}
+    {%- endblock header %}
 
-    {% block main %}
-    <main{% block main_attributes %}{% endblock main_attributes %}>
-        {% block hero %}{% endblock hero %}
-        {% block content %}{% endblock %}
+    {%- block main %}
+    <main{%- block main_attributes %}{% endblock main_attributes %}>
+        {%- block hero %}{% endblock hero %}
+        {%- block content %}{% endblock %}
     </main>
-    {% endblock main %}
+    {%- endblock main %}
 
     {% if config.extra.show_footer %}
         {% block footer %}

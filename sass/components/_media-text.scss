@@ -16,7 +16,7 @@ $media-text-options: (
   md: (margin-block: 1.5rem, content-padding: 0.75rem, paragraph-base: 1.05rem, heading-base: 1.1rem),
   lg: (margin-block: 2rem, content-padding: 1rem, paragraph-base: 1.1rem, heading-base: 1.15rem),
   xl: (margin-block: 2.25rem, content-padding: 3rem, paragraph-base: 1.15rem, heading-base: 1.25rem),
-  xxl: (margin-block: 2.5rem, content-padding: 3.5rem, paragraph-base: 1.2rem, heading-base: 3rem)
+  xxl: (margin-block: 2.5rem, content-padding: 3rem, paragraph-base: 1.2rem, heading-base: 2.5rem)
 );
 
 $media-text-grid-breakpoint: map.get(bp.$breakpoints, md, breakpoint);

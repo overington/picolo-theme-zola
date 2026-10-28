@@ -4,9 +4,9 @@
 
 {% block description %}
 {% if page.description %}
-{{ page.description }}
+{{- page.description -}}
 {% else %}
-{{ super() }}
+{{- super() -}}
 {% endif %}
 {% endblock description %}
 

@@ -9,42 +9,36 @@
     height: string = 'auto',
     alt: string = '',
     class_name: string = ''
-) -%}
-{% set resolved_image_width = image_width %}
-{% set resolved_image_height = image_height %}
-{% if image_width == 0 %}
-{% set resolved_image_width = config.extra.picolo.image_defaults.media_text_width %}
-{% endif %}
-{% if image_height == 0 %}
-{% set resolved_image_height = config.extra.picolo.image_defaults.media_text_height %}
-{% endif %}
+) %}
+{%- set resolved_image_width = image_width %}
+{%- set resolved_image_height = image_height %}
+{%- if image_width == 0 %}
+{%- set resolved_image_width = config.extra.picolo.image_defaults.media_text_width %}
+{%- endif %}
+{%- if image_height == 0 %}
+{%- set resolved_image_height = config.extra.picolo.image_defaults.media_text_height %}
+{%- endif %}
 
-{% set resolved_height = height %}
+{%- set resolved_height = height %}
 
-{% if height == 'header' %}
-{% set resolved_height = 'calc(100svh - var(--site-nav-height))' %}
-{% elif height == 'full' or height == 'full-height' or height == 'max' %}
-{% set resolved_height = '100svh' %}
-{% endif %}
+{%- if height == 'header' %}
+{%- set resolved_height = 'calc(100svh - var(--site-nav-height))' %}
+{%- elif height == 'full' or height == 'full-height' or height == 'max' %}
+{%- set resolved_height = '100svh' %}
+{%- endif %}
 
-{% set image = resize_image( path=path, width=resolved_image_width, height=resolved_image_height, op="fill" ) %}
+{%- set image = resize_image( path=path, width=resolved_image_width, height=resolved_image_height, op="fill" ) %}
 
-{% set position_class = 'media-text--left' %}
-{% if position == 'right' %}
-{% set position_class = 'media-text--right' %}
-{% endif %}
+{%- set position_class = 'media-text--left' %}
+{%- if position == 'right' %}
+{%- set position_class = 'media-text--right' %}
+{%- endif %}
 <div class="media-text {{ position_class }}{% if height == 'header' %} media-text--header-height{% endif %}{% if class_name %} {{ class_name }}{% endif %}" {% if resolved_height != 'auto' %} style="--media-text-height: {{ resolved_height }};" {% endif %} >
-<figure class="media-text__image">
-<img
-    src="{{ image.url }}"
-    width="{{ image.width }}"
-    height="{{ image.height }}"
-    alt="{{ alt }}"
->
-</figure>
-
-<div class="media-text__content">
-{{ body | markdown | safe }}
+    <figure class="media-text__image">
+        <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}" >
+    </figure>
+    <div class="media-text__content">
+        {{ body | markdown | safe -}}
+    </div>
 </div>
-</div>
-{% endcomponent ui.media_text %}
+{%- endcomponent ui.media_text %}
