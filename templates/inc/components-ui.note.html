@@ -3,6 +3,6 @@
     {% if title %}
     <strong>{{ title }}</strong><br>
     {% endif %}
-    {{ body | markdown | safe }}
+    {{- body | markdown | safe -}}
 </aside>
 {% endcomponent ui.note %}

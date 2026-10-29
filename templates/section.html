@@ -2,39 +2,39 @@
 
 {% block title %}{{ section.title }} | {{ super() }}{% endblock %}
 
-{%- block description %}
-{%- if section.description %}
-{{- section.description }}
-{%- else %}
-{{- super() }}
-{%- endif %}
-{%- endblock %}
+{%- block description -%}
+{%- if section.description -%}
+{{- section.description -}}
+{%- else -%}
+{{- super() -}}
+{%- endif -%}
+{%- endblock description -%}
 
-{%- block hero %}
-{%- set hero_source = section %}
-{%- include "inc/render-hero.html" %}
-{%- endblock hero %}
+{%- block hero -%}
+{%- set hero_source = section -%}
+{%- include "inc/render-hero.html" -%}
+{%- endblock hero -%}
 
-{% block content %}
+{%- block content -%}
 <section class="container section section-blog" aria-labelledby="section-title">
 <header class="page-header">
 <h1 id="section-title">{{ section.title }}</h1>
 
-{% if section.description %}
+{%- if section.description -%}
 <div class="page-description">
-{{ section.description | markdown | safe }}
+{{- section.description | markdown | safe -}}
 </div>
-{% endif %}
+{%- endif -%}
 </header>
 
-{% if section.paginate_by %}
-{% set pages = paginator.pages %}
-{% else %}
-{% set pages = section.pages %}
-{% endif %}
+{%- if section.paginate_by -%}
+{%- set pages = paginator.pages -%}
+{%- else -%}
+{%- set pages = section.pages -%}
+{%- endif -%}
 
 <ul class="post-list">
-{% for page in pages %}
+{%- for page in pages -%}
 <li class="post-preview">
     <small class="post-date">{{ <ui.date /> }}</small>
 
@@ -42,21 +42,21 @@
         <a href="{{ page.permalink }}">{{ page.title }}</a>
     </p>
 
-    {% if page.description %}
+    {%- if page.description -%}
     <p class="post-description">
         {{ page.description }} &middot; (<a href="{{ page.permalink }}">{{ <ui.reading_time /> }}</a>)
     </p>
-    {% elif page.summary %}
+    {%- elif page.summary -%}
     <p class="post-description">
         {{ page.summary | safe }} &middot; (<a href="{{ page.permalink }}">{{ <ui.reading_time /> }}</a>)
     </p>
-    {% endif %}
+    {%- endif %}
 </li>
-{% endfor %}
+{%- endfor -%}
 </ul>
 
-{% if section.paginate_by and config.extra.pagination_enabled | default(value=true) %}
+{%- if section.paginate_by and config.extra.pagination_enabled | default(value=true) -%}
 {{ <ui.pagination /> }}
-{% endif %}
+{%- endif %}
 </section>
-{% endblock content %}
+{%- endblock content -%}

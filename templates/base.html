@@ -48,16 +48,16 @@
     </main>
     {%- endblock main %}
 
-    {% if config.extra.show_footer %}
-        {% block footer %}
+    {%- if config.extra.show_footer -%}
+        {%- block footer -%}
             <footer class="container">
-                {% if config.extra.footer_extra_content %}
+                {%- if config.extra.footer_extra_content -%}
                 <div><small>{{ config.extra.footer_extra_content | safe }}</small></div>
-                {% endif %}
+                {%- endif -%}
                 <small>{{ config.extra.footer_text | default(value="Built with Zola") }}</small>
             </footer>
-        {% endblock footer %}
-    {% endif %}
+        {%- endblock footer -%}
+    {%- endif -%}
     <!-- Minimal theme switcher -->
     <script src="{{ get_url(path="js/minimal-theme-switcher.js") }}"></script>
     <script src="{{ get_url(path="js/hero-slider.js") }}"></script>

@@ -8,80 +8,76 @@
     slider: bool = false,
     lighten: float = 0.2,
     class_name: string = ''
-) -%}
-{% set resolved_image_width = image_width %}
-{% set resolved_image_height = image_height %}
-{% if image_width == 0 %}
-{% set resolved_image_width = config.extra.picolo.image_defaults.hero_width %}
-{% endif %}
-{% if image_height == 0 %}
-{% set resolved_image_height = config.extra.picolo.image_defaults.hero_height %}
-{% endif %}
-
-{% set resolved_height = height %}
-
-{% if height == 'header' %}
-{% set resolved_height = 'calc(100svh - var(--site-nav-height))' %}
-{% elif height == 'full' or height == 'full-height' or height == 'max' %}
-{% set resolved_height = '100svh' %}
-{% endif %}
-
-<section
-id="{{ id }}"
-class="hero{% if slider %} hero--slider{% endif %}{% if class_name %} {{ class_name }}{% endif %}"
-style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }};"
->
-<div class="hero__slides" {% if slider %} role="region" aria-label="Image slider" tabindex="0" {% endif %} >
-{% for path in images %}
-{% if slider or loop.first %}
-{% set image = resize_image(
-    path=path,
-    width=resolved_image_width,
-    height=resolved_image_height,
-    op="fill"
 ) %}
-<div class="hero__slide" data-hero-slide="{{ loop.index0 }}">
-<img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="" aria-hidden="true" >
-</div>
-{% endif %}
-{% endfor %}
-</div>
+{%- set resolved_image_width = image_width -%}
+{%- set resolved_image_height = image_height -%}
+{%- if image_width == 0 -%}
+{%- set resolved_image_width = config.extra.picolo.image_defaults.hero_width -%}
+{%- endif -%}
+{%- if image_height == 0 -%}
+{%- set resolved_image_height = config.extra.picolo.image_defaults.hero_height -%}
+{%- endif -%}
+{#- --- -#}
+{%- set resolved_height = height -%}
+{#- --- -#}
+{%- if height == 'header' -%}
+{%- set resolved_height = 'calc(100svh - var(--site-nav-height))' -%}
+{%- elif height == 'full' or height == 'full-height' or height == 'max' -%}
+{%- set resolved_height = '100svh' -%}
+{%- endif -%}
 
-{% if body or (slider and images | length > 1) %}
-{% set has_arrows = slider and images | length > 1 %}
-<div class="hero__layout{% if not has_arrows %} hero__layout--content-only{% endif %}">
-{% if has_arrows %}
-<nav class="hero__arrow-nav hero__arrow-nav--previous" aria-label="Previous image" >
-<button type="button" class="hero__arrow" data-hero-previous aria-label="Previous image" >
-<span class="hero__chevron hero__chevron--left" aria-hidden="true" ></span>
-</button>
-</nav>
-{% endif %}
+<section id="{{ id }}" class="hero{% if slider %} hero--slider{% endif %}{% if class_name %} {{ class_name }}{% endif %}" style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }};" >
+    <div class="hero__slides" {% if slider %} role="region" aria-label="Image slider" tabindex="0" {% endif %}>
+    {%- for path in images %}
+    {%- if slider or loop.first %}
+    {%- set image = resize_image(
+        path=path,
+        width=resolved_image_width,
+        height=resolved_image_height,
+        op="fill"
+    ) -%}
+        <div class="hero__slide" data-hero-slide="{{ loop.index0 }}">
+            <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="" aria-hidden="true" >
+        </div>
+    {%- endif %}
+    {%- endfor %}
+    </div>
 
-{% if body %}
-<div class="hero__content">
-{{ body | markdown | safe }}
-</div>
-{% endif %}
+    {%- if body or (slider and images | length > 1) %}
+    {%- set has_arrows = slider and images | length > 1 -%}
+    <div class="hero__layout{% if not has_arrows %} hero__layout--content-only{% endif %}">
+        {%- if has_arrows %}
+        <nav class="hero__arrow-nav hero__arrow-nav--previous" aria-label="Previous image" >
+        <button type="button" class="hero__arrow" data-hero-previous aria-label="Previous image" >
+            <span class="hero__chevron hero__chevron--left" aria-hidden="true" ></span>
+        </button>
+        </nav>
+        {%- endif %}{# has_arrows #}
 
-{% if has_arrows %}
-<nav class="hero__arrow-nav hero__arrow-nav--next" aria-label="Next image" >
-<button type="button" class="hero__arrow" data-hero-next aria-label="Next image" >
-<span class="hero__chevron hero__chevron--right" aria-hidden="true" ></span>
-</button>
-</nav>
-{% endif %}
-</div>
-{% endif %}
+        {%- if body %}
+        <div class="hero__content">
+        {{- body | markdown | safe -}}
+        </div>
+        {%- endif %}{# body #}
 
-{% if has_arrows %}
-<nav class="hero__controls" aria-label="Choose hero image">
-{% for path in images %}
-<button type="button" data-hero-slide-control="{{ loop.index0 }}" {% if loop.first %} aria-current="true" {% else %} aria-current="false" {% endif %} aria-label="Show image {{ loop.index }}" >
-<span aria-hidden="true"></span>
-</button>
-{% endfor %}
-</nav>
-{% endif %}
+        {%- if has_arrows %}
+        <nav class="hero__arrow-nav hero__arrow-nav--next" aria-label="Next image" >
+            <button type="button" class="hero__arrow" data-hero-next aria-label="Next image" >
+                <span class="hero__chevron hero__chevron--right" aria-hidden="true" ></span>
+            </button>
+        </nav>
+        {%- endif %}{# has_arrows #}
+    </div>
+    {%- endif %}{# body or (slider and images | length > 1) #}
+
+    {%- if has_arrows %}
+    <nav class="hero__controls" aria-label="Choose hero image">
+    {%- for path in images %}
+        <button type="button" data-hero-slide-control="{{ loop.index0 }}" {% if loop.first %} aria-current="true" {% else %} aria-current="false" {% endif %} aria-label="Show image {{ loop.index }}" >
+            <span aria-hidden="true"></span>
+        </button>
+    {%- endfor %}
+    </nav>
+    {%- endif %}{# has_arrows #}
 </section>
 {% endcomponent ui.hero %}

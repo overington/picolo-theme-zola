@@ -1,14 +1,13 @@
 {# Post metadata display macro #}
-{% component ui.date(@page: map) %}
-{% if page.date %}
-  {% set day = page.date | date(format="%d") | int %}
+{%- component ui.date(@page: map) -%}
+{%- if page.date -%}
+  {%- set day = page.date | date(format="%d") | int -%}
   <time datetime="{{ page.date }}">{{ day }}{% if day == 11 or day == 12 or day == 13 %}th{% elif day == 1 or day == 21 or day == 31 %}st{% elif day == 2 or day == 22 %}nd{% elif day == 3 or day == 23 %}rd{% else %}th{% endif %} {{ page.date | date(format="%B %Y") }}</time>
-{% endif %}
+{%- endif -%}
+{%- endcomponent ui.date -%}
 
-{% endcomponent ui.date %}
-
-{% component ui.reading_time(@page: map) %}
-{% if page.reading_time %}
+{%- component ui.reading_time(@page: map) -%}
+{%- if page.reading_time -%}
 <span>{{ page.reading_time }} min read</span>
-{% endif %}
-{% endcomponent ui.reading_time %}
+{%- endif -%}
+{%- endcomponent ui.reading_time -%}

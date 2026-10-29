@@ -1,24 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}{{ page.title }} | {{ super() }}{% endblock %}
+{%- block title -%}{{ page.title }} | {{ super() }}{%- endblock title -%}
 
-{% block description %}
-{% if page.description %}
+{%- block description -%}
+{%- if page.description -%}
 {{- page.description -}}
-{% else %}
+{%- else -%}
 {{- super() -}}
-{% endif %}
-{% endblock description %}
+{%- endif -%}
+{%- endblock description -%}
 
-{% block hero %}
-{% set hero_source = page %}
-{% include "inc/render-hero.html" %}
-{% endblock hero %}
+{%- block hero -%}
+{%- set hero_source = page -%}
+{%- include "inc/render-hero.html" -%}
+{%- endblock hero -%}
 
-{% block content %}
+{%- block content -%}
+{%- set page_hero = page.extra | get(key="hero", default=false) -%}
+{%- set page_category = page.extra | get(key="category", default='') -%}
+{%- set page_tags = page.extra | get(key="tags", default=[]) -%}
+{%- set content_show_title = true -%}
+{%- set content_show_description = true -%}
+{%- if page_hero and page_hero.images and page_hero.images | length > 0 -%}
+    {%- if page_hero.use_title | default(value=false) -%}
+        {%- set content_show_title = false -%}
+    {%- endif -%}
+    {%- if page_hero.use_description | default(value=false) -%}
+        {%- set content_show_description = false -%}
+    {%- endif -%}
+{%- endif -%}
+
 <article class="container page page--plain">
+{%- if content_show_title or content_show_description -%}
+{{ <ui.article_head
+    title={page.title}
+    description={page.description | default(value='')}
+    category={page_category}
+    tags={page_tags}
+    show_title={content_show_title}
+    show_description={content_show_description}
+    class_name="article-head--page page-header"
+/> }}
+{%- endif %}
 <div class="page-content">
 {{ page.content | safe }}
 </div>
 </article>
-{% endblock content %}
+{%- endblock content -%}

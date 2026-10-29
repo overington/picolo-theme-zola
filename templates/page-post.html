@@ -1,22 +1,62 @@
 {% extends "page.html" %}
 
-{% block content %}
-<article class="container page">
-    <header class="page-header">
-    <h1>{{ page.title }}</h1>
+{%- block content %}
+{%- set page_hero = page.extra | get(key="hero", default=false) -%}
+{%- set page_category = page.extra | get(key="category", default='') -%}
+{%- set page_tags = page.extra | get(key="tags", default=[]) -%}
+{%- set content_show_title = true -%}
+{%- set content_show_description = true -%}
+{%- set content_show_date = true -%}
+{%- set content_show_reading_time = true -%}
+{%- set content_show_category = true -%}
+{%- set content_show_tags = true -%}
+{%- set article_date = '' -%}
+{%- if page.date -%}
+    {%- set article_date = page.date | date(format="%Y-%m-%d") -%}
+{%- endif -%}
 
-    {%- if page.description %}
-    <div class="page-description">
-{{ page.description | markdown | safe }}
-    </div>
+{%- if page_hero and page_hero.images and page_hero.images | length > 0 -%}
+    {%- if page_hero.use_title | default(value=false) -%}
+        {%- set content_show_title = false -%}
+    {%- endif -%}
+    {%- if page_hero.use_description | default(value=false) -%}
+        {%- set content_show_description = false -%}
+    {%- endif -%}
+    {%- if page_hero.use_date | default(value=false) -%}
+        {%- set content_show_date = false -%}
+    {%- endif -%}
+    {%- if page_hero.use_reading_time | default(value=false) -%}
+        {%- set content_show_reading_time = false -%}
+    {%- endif -%}
+    {%- if page_hero.use_category | default(value=false) -%}
+        {%- set content_show_category = false -%}
+    {%- endif -%}
+    {%- if page_hero.use_tags | default(value=false) -%}
+        {%- set content_show_tags = false -%}
+    {%- endif -%}
+{%- endif -%}
+
+<article class="container page page--post">
+    {%- if content_show_title or content_show_description or content_show_date or content_show_reading_time or (content_show_category and page_category) or (content_show_tags and page_tags | length > 0) -%}
+    {{ <ui.article_head
+        title={page.title}
+        description={page.description | default(value='')}
+        date={article_date}
+        reading_time={page.reading_time | default(value=0)}
+        category={page_category}
+        tags={page_tags}
+        show_title={content_show_title}
+        show_description={content_show_description}
+        show_date={content_show_date}
+        show_reading_time={content_show_reading_time}
+        show_category={content_show_category}
+        show_tags={content_show_tags}
+        class_name="article-head--page page-header"
+    /> }}
     {%- endif %}
-
-    {{ <ui.date /> }}
-    {{ <ui.reading_time /> }}
-    </header>
 
     <div class="page-content">
 {{ page.content | safe }}
     </div>
 </article>
-{% endblock content %}
+{%- endblock content -%}

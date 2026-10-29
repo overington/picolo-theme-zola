@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block hero %}
-{% set hero_source = section %}
-{% include "inc/render-hero.html" %}
-{% endblock hero %}
+{%- block hero -%}
+{%- set hero_source = section -%}
+{%- include "inc/render-hero.html" -%}
+{%- endblock hero -%}
 
-{% block content %}
-{% if not section.extra.hero %}
+{%- block content -%}
+{%- if not section.extra.hero -%}
 <header class="container page-header">
 <h1>{{ section.title }}</h1>
 
-{% if section.description %}
+{%- if section.description -%}
 <div class="page-description">
-{{ section.description | markdown | safe }}
+{{- section.description | markdown | safe -}}
 </div>
-{% endif %}
+{%- endif -%}
 </header>
-{% endif %}
+{%- endif -%}
 
 <div class="home-page-content">
 {{ section.content | safe }}
 </div>
-{% endblock content %}
+{%- endblock content -%}

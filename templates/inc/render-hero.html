@@ -1,62 +1,103 @@
-{% if hero_source.extra.hero %}
-{% set hero = hero_source.extra.hero %}
+{%- set hero = hero_source.extra | get(key="hero", default=false) -%}
+{%- if hero -%}
+{%- if hero.images and hero.images | length > 0 -%}
+{%- set hero_title = hero_source.title | default(value='') -%}
+{%- set hero_description = hero_source.description | default(value='') -%}
+{%- set hero_date = '' -%}
+{%- set source_date = hero_source | get(key="date", default='') -%}
+{%- if source_date -%}
+{%- set hero_date = source_date | date(format="%Y-%m-%d") -%}
+{%- endif -%}
+{%- set hero_reading_time = hero_source | get(key="reading_time", default=0) -%}
+{%- set hero_category = hero_source.extra | get(key="category", default='') -%}
+{%- set hero_tags = hero_source.extra | get(key="tags", default=[]) -%}
 
-{% if hero.images and hero.images | length > 0 %}
-{% set hero_title = hero_source.title | default(value='') %}
-{% set hero_description = hero_source.description | default(value='') %}
+{#- Values in [extra.hero] override page/section values when supplied. -#}
+{%- if hero.title -%}
+{%- set hero_title = hero.title -%}
+{%- endif -%}
 
-{# Values in [extra.hero] override page/section values when supplied. #}
-{% if hero.title %}
-{% set hero_title = hero.title %}
-{% endif %}
+{%- if hero.description -%}
+{%- set hero_description = hero.description -%}
+{%- endif -%}
 
-{% if hero.description %}
-{% set hero_description = hero.description %}
-{% endif %}
+{%- set include_title = hero.use_title | default(value=false) -%}
+{%- set include_description = hero.use_description | default(value=false) -%}
+{%- set include_date = hero.use_date | default(value=false) -%}
+{%- set include_reading_time = hero.use_reading_time | default(value=false) -%}
+{%- set include_category = hero.use_category | default(value=false) -%}
+{%- set include_tags = hero.use_tags | default(value=false) -%}
+{%- set include_article_head = false -%}
 
-{% set include_title = false %}
-{% set include_description = false %}
+{%- if include_title and hero_title -%}
+{%- set include_article_head = true -%}
+{%- endif -%}
+{%- if include_description and hero_description -%}
+{%- set include_article_head = true -%}
+{%- endif -%}
+{%- if include_date and hero_date -%}
+{%- set include_article_head = true -%}
+{%- endif -%}
+{%- if include_reading_time and hero_reading_time > 0 -%}
+{%- set include_article_head = true -%}
+{%- endif -%}
+{%- if include_category and hero_category -%}
+{%- set include_article_head = true -%}
+{%- endif -%}
+{%- if include_tags and hero_tags | length > 0 -%}
+{%- set include_article_head = true -%}
+{%- endif -%}
 
-{% if hero.use_title | default(value=false) and hero_title %}
-{% set include_title = true %}
-{% endif %}
+{%- set hero_title_color = hero.title_color | default(value='') -%}
+{%- set hero_text_color = hero.text_color | default(value='') -%}
+{%- set hero_image_width = hero.image_width | default(value=config.extra.picolo.image_defaults.hero_width) -%}
+{%- set hero_image_height = hero.image_height | default(value=config.extra.picolo.image_defaults.hero_height) -%}
+{%- set hero_id = hero.id | default(value="page-hero") -%}
+{%- set hero_height = hero.height | default(value="auto") -%}
+{%- set hero_slider = hero.slider | default(value=false) -%}
+{%- set hero_lighten = hero.lighten | default(value=0.2) -%}
+{%- set hero_class_name = hero.class_name | default(value="") -%}
 
-{% if hero.use_description | default(value=false) and hero_description %}
-{% set include_description = true %}
-{% endif %}
-
-{% if include_title or include_description %}
-{% <ui.hero
+{%- if include_article_head -%}
+{%- <ui.hero
 images={hero.images}
-id={hero.id | default(value="page-hero")}
-image_width={hero.image_width | default(value=config.extra.picolo.image_defaults.hero_width)}
-image_height={hero.image_height | default(value=config.extra.picolo.image_defaults.hero_height)}
-height={hero.height | default(value="auto")}
-slider={hero.slider | default(value=false)}
-lighten={hero.lighten | default(value=0.2)}
-class_name={hero.class_name | default(value="")}
+id={hero_id}
+image_width={hero_image_width}
+image_height={hero_image_height}
+height={hero_height}
+slider={hero_slider}
+lighten={hero_lighten}
+class_name={hero_class_name}
 > %}
-
-{% if include_title %}
-<h1>{{ hero_title }}</h1>
-{% endif %}
-
-{% if include_description %}
-<h2>{{ hero_description | markdown | safe }}</h2>
-{% endif %}
-
+{{ <ui.article_head
+    title={hero_title}
+    description={hero_description}
+    date={hero_date}
+    reading_time={hero_reading_time}
+    category={hero_category}
+    tags={hero_tags}
+    show_title={include_title}
+    show_description={include_description}
+    show_date={include_date}
+    show_reading_time={include_reading_time}
+    show_category={include_category}
+    show_tags={include_tags}
+    title_color={hero_title_color}
+    text_color={hero_text_color}
+    class_name="article-head--hero"
+/> }}
 {% </ui.hero> %}
-{% else %}
+{%- else -%}
 {{ <ui.hero
 images={hero.images}
-id={hero.id | default(value="page-hero")}
-image_width={hero.image_width | default(value=config.extra.picolo.image_defaults.hero_width)}
-image_height={hero.image_height | default(value=config.extra.picolo.image_defaults.hero_height)}
-height={hero.height | default(value="auto")}
-slider={hero.slider | default(value=false)}
-lighten={hero.lighten | default(value=0.2)}
-class_name={hero.class_name | default(value="")}
+id={hero_id}
+image_width={hero_image_width}
+image_height={hero_image_height}
+height={hero_height}
+slider={hero_slider}
+lighten={hero_lighten}
+class_name={hero_class_name}
 /> }}
-{% endif %}
-{% endif %}
-{% endif %}
+{%- endif -%}
+{%- endif -%}
+{%- endif -%}

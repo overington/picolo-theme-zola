@@ -1,6 +1,6 @@
 {#- Pagination component for blog listings #}
 {%- component ui.pagination(@paginator: map) %}
-    {%- if paginator.number_pagers > 1 %}
+    {%- if paginator.number_pagers > 1 -%}
     <nav aria-label="pagination">
         <ul>
             {%- if paginator.previous %}
@@ -16,5 +16,5 @@
             {%- endif %}
         </ul>
     </nav>
-    {%- endif %}
+    {%- endif -%}
 {%- endcomponent ui.pagination -%}

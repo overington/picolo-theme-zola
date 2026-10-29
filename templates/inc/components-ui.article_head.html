@@ -1,0 +1,58 @@
+{%- component ui.article_head(
+    title: string = '',
+    description: string = '',
+    date: string = '',
+    reading_time: integer = 0,
+    category: string = '',
+    tags: array = [],
+    show_title: bool = true,
+    show_description: bool = true,
+    show_date: bool = false,
+    show_reading_time: bool = false,
+    show_category: bool = false,
+    show_tags: bool = false,
+    title_color: string = '',
+    text_color: string = '',
+    class_name: string = ''
+) -%}
+{%- set has_metadata = false -%}
+{%- if (show_date and date) or (show_reading_time and reading_time > 0) or (show_category and category) or (show_tags and tags | length > 0) -%}
+{%- set has_metadata = true -%}
+{%- endif -%}
+<header class="article-head{% if class_name %} {{ class_name }}{% endif %}"{% if title_color or text_color %} style="{% if title_color %}--article-head-title-color: {{ title_color }};{% endif %}{% if text_color %}--article-head-text-color: {{ text_color }};{% endif %}"{% endif %}>
+    {%- if show_title and title -%}
+    <h1 class="article-head__title">{{ title }}</h1>
+    {%- endif -%}
+
+    {%- if show_description and description -%}
+    <div class="article-head__description">
+        {{- description | markdown | safe -}}
+    </div>
+    {%- endif -%}
+
+    {%- if has_metadata -%}
+    <div class="article-head__meta">
+        {%- if show_date and date -%}
+        {%- set day = date | date(format="%d") | int -%}
+        <time class="article-head__date" datetime="{{ date }}">{{ day }}{% if day == 11 or day == 12 or day == 13 %}th{% elif day == 1 or day == 21 or day == 31 %}st{% elif day == 2 or day == 22 %}nd{% elif day == 3 or day == 23 %}rd{% else %}th{% endif %} {{ date | date(format="%B %Y") }}</time>
+        {%- endif -%}
+
+        {%- if show_reading_time and reading_time > 0 -%}
+        <span class="article-head__reading-time">{{ reading_time }} min read</span>
+        {%- endif -%}
+
+        {%- if show_category and category -%}
+        <span class="article-head__category"><span class="article-head__visually-hidden">Category: </span>{{ category }}</span>
+        {%- endif -%}
+
+        {%- if show_tags and tags | length > 0 -%}
+        <ul class="article-head__tags" aria-label="Tags">
+            {%- for tag in tags -%}
+            <li>{{ tag }}</li>
+            {%- endfor -%}
+        </ul>
+        {%- endif -%}
+    </div>
+    {%- endif -%}
+</header>
+{%- endcomponent ui.article_head -%}
