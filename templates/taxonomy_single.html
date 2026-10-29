@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{%- block title -%}{{ term.name }} | {{ super() }}{%- endblock title -%}
+
+{%- block content -%}
+<section class="container section taxonomy taxonomy--term">
+    <header class="page-header">
+        <h1>{{ term.name }}</h1>
+        {% if taxonomy.name == "tags" %}
+        <p>Posts tagged with #{{ term.name }}</p>
+        {% elif taxonomy.name == "categories" %}
+        <p>Posts in {{ term.name }}</p>
+        {% endif %}
+    </header>
+
+    <ul class="post-list">
+        {%- for page in term.pages %}
+        <li class="post-preview">
+            <small class="post-date">{{ <ui.date /> }}</small>
+            <p class="post-title"><a href="{{ page.permalink }}">{{ page.title }}</a></p>
+            {% if page.description %}
+            <p class="post-description">{{ page.description }}</p>
+            {% elif page.summary %}
+            <div class="post-description">{{ page.summary | safe }}</div>
+            {% endif %}
+        </li>
+        {%- endfor %}
+    </ul>
+</section>
+{%- endblock content -%}

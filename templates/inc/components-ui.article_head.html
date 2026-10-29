@@ -17,7 +17,7 @@
 {%- if (show_date and date) or (show_reading_time and reading_time > 0) or (show_category and category) or (show_tags and tags | length > 0) -%}
 {%- set has_metadata = true -%}
 {%- endif -%}
-<header class="article-head{% if class_name %} {{ class_name }}{% endif %}"></header>
+<header class="article-head{% if class_name %} {{ class_name }}{% endif %}">
     {%- if show_title and title -%}
     <h1 class="article-head__title">{{ title }}</h1>
     {%- endif -%}
@@ -40,13 +40,13 @@
         {%- endif -%}
 
         {%- if show_category and category -%}
-        <span class="article-head__category"><span class="article-head__visually-hidden">Category: </span>{{ category }}</span>
+        <span class="article-head__category"><span class="article-head__visually-hidden">Category: </span><a href="{{ get_taxonomy_url(kind="categories", term=category) }}">{{ category }}</a></span>
         {%- endif -%}
 
         {%- if show_tags and tags | length > 0 -%}
         <ul class="article-head__tags" aria-label="Tags">
             {%- for tag in tags -%}
-            <li>{{ tag }}</li>
+            <li><a href="{{ get_taxonomy_url(kind="tags", term=tag) }}">#{{ tag }}</a></li>
             {%- endfor -%}
         </ul>
         {%- endif -%}

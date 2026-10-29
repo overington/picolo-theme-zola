@@ -9,8 +9,13 @@
 {%- set hero_date = source_date | date(format="%Y-%m-%d") -%}
 {%- endif -%}
 {%- set hero_reading_time = hero_source | get(key="reading_time", default=0) -%}
-{%- set hero_category = hero_source.extra | get(key="category", default='') -%}
-{%- set hero_tags = hero_source.extra | get(key="tags", default=[]) -%}
+{%- set hero_taxonomies = hero_source | get(key="taxonomies", default={}) -%}
+{%- set hero_category_terms = hero_taxonomies | get(key="categories", default=[]) -%}
+{%- set hero_category = '' -%}
+{%- if hero_category_terms | length > 0 -%}
+{%- set hero_category = hero_category_terms | first -%}
+{%- endif -%}
+{%- set hero_tags = hero_taxonomies | get(key="tags", default=[]) -%}
 
 {#- Values in [extra.hero] override page/section values when supplied. -#}
 {%- if hero.title -%}

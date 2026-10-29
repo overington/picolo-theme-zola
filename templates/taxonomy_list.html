@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{%- block title -%}{% if taxonomy.name == "categories" %}Categories{% elif taxonomy.name == "tags" %}Tags{% else %}{{ taxonomy.name }}{% endif %} | {{ super() }}{%- endblock title -%}
+
+{%- block content -%}
+<section class="container section taxonomy taxonomy--list">
+    <header class="page-header">
+        <h1>{% if taxonomy.name == "categories" %}Categories{% elif taxonomy.name == "tags" %}Tags{% else %}{{ taxonomy.name }}{% endif %}</h1>
+    </header>
+
+    <ul class="taxonomy-term-list">
+        {%- for term in terms %}
+        <li>
+            <a href="{{ term.permalink }}">{{ term.name }}</a>
+            <small>{{ term.page_count }} {% if term.page_count == 1 %}post{% else %}posts{% endif %}</small>
+        </li>
+        {%- endfor %}
+    </ul>
+</section>
+{%- endblock content -%}

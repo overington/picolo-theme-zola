@@ -138,6 +138,27 @@ images = ["content/blog/example/hero.jpg"]
 text_color = "inverse" # or a CSS color/value
 ```
 
+### Categories and tags
+
+Enable the `categories` and `tags` taxonomies in the site's `zola.toml`:
+
+```toml
+taxonomies = [
+    { name = "categories", render = true, feed = false },
+    { name = "tags", render = true, feed = false },
+]
+```
+
+Assign terms to a page in its front matter:
+
+```toml
+[taxonomies]
+categories = ["notes"]
+tags = ["writing", "notes"]
+```
+
+The theme renders the taxonomy index pages at `/categories/` and `/tags/`, term pages such as `/categories/notes/` and `/tags/writing/`, and links the category and tags in `ui.article_head` to their corresponding term pages.
+
 ### Pagination
 
 Control how sections display their pages with configurable pagination settings:

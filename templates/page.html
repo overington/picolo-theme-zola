@@ -17,8 +17,13 @@
 
 {%- block content -%}
 {%- set page_hero = page.extra | get(key="hero", default=false) -%}
-{%- set page_category = page.extra | get(key="category", default='') -%}
-{%- set page_tags = page.extra | get(key="tags", default=[]) -%}
+{%- set page_taxonomies = page | get(key="taxonomies", default={}) -%}
+{%- set page_category_terms = page_taxonomies | get(key="categories", default=[]) -%}
+{%- set page_category = '' -%}
+{%- if page_category_terms | length > 0 -%}
+{%- set page_category = page_category_terms | first -%}
+{%- endif -%}
+{%- set page_tags = page_taxonomies | get(key="tags", default=[]) -%}
 {%- set has_hero_image = page_hero and page_hero.images and page_hero.images | length > 0 -%}
 
 <article class="container page page--plain">
