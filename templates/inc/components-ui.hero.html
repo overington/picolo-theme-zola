@@ -17,9 +17,9 @@
 {%- if image_height == 0 -%}
 {%- set resolved_image_height = config.extra.picolo.image_defaults.hero_height -%}
 {%- endif -%}
-{#- --- -#}
+
 {%- set resolved_height = height -%}
-{#- --- -#}
+
 {%- if height == 'header' -%}
 {%- set resolved_height = 'calc(100svh - var(--site-nav-height))' -%}
 {%- elif height == 'full' or height == 'full-height' or height == 'max' -%}

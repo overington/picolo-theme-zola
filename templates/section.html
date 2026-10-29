@@ -16,7 +16,10 @@
 {%- endblock hero -%}
 
 {%- block content -%}
+{%- set section_hero = section.extra | get(key="hero", default=false) -%}
+{%- set has_hero_image = section_hero and section_hero.images and section_hero.images | length > 0 -%}
 <section class="container section section-blog" aria-labelledby="section-title">
+{%- if not has_hero_image -%}
 <header class="page-header">
 <h1 id="section-title">{{ section.title }}</h1>
 
@@ -26,6 +29,7 @@
 </div>
 {%- endif -%}
 </header>
+{%- endif -%}
 
 {%- if section.paginate_by -%}
 {%- set pages = paginator.pages -%}

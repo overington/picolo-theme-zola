@@ -19,26 +19,17 @@
 {%- set page_hero = page.extra | get(key="hero", default=false) -%}
 {%- set page_category = page.extra | get(key="category", default='') -%}
 {%- set page_tags = page.extra | get(key="tags", default=[]) -%}
-{%- set content_show_title = true -%}
-{%- set content_show_description = true -%}
-{%- if page_hero and page_hero.images and page_hero.images | length > 0 -%}
-    {%- if page_hero.use_title | default(value=false) -%}
-        {%- set content_show_title = false -%}
-    {%- endif -%}
-    {%- if page_hero.use_description | default(value=false) -%}
-        {%- set content_show_description = false -%}
-    {%- endif -%}
-{%- endif -%}
+{%- set has_hero_image = page_hero and page_hero.images and page_hero.images | length > 0 -%}
 
 <article class="container page page--plain">
-{%- if content_show_title or content_show_description -%}
+{%- if not has_hero_image -%}
 {{ <ui.article_head
     title={page.title}
     description={page.description | default(value='')}
     category={page_category}
     tags={page_tags}
-    show_title={content_show_title}
-    show_description={content_show_description}
+    show_title={true}
+    show_description={true}
     class_name="article-head--page page-header"
 /> }}
 {%- endif %}

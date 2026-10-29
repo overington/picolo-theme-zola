@@ -21,32 +21,6 @@
 {%- set hero_description = hero.description -%}
 {%- endif -%}
 
-{%- set include_title = hero.use_title | default(value=false) -%}
-{%- set include_description = hero.use_description | default(value=false) -%}
-{%- set include_date = hero.use_date | default(value=false) -%}
-{%- set include_reading_time = hero.use_reading_time | default(value=false) -%}
-{%- set include_category = hero.use_category | default(value=false) -%}
-{%- set include_tags = hero.use_tags | default(value=false) -%}
-{%- set include_article_head = false -%}
-
-{%- if include_title and hero_title -%}
-{%- set include_article_head = true -%}
-{%- endif -%}
-{%- if include_description and hero_description -%}
-{%- set include_article_head = true -%}
-{%- endif -%}
-{%- if include_date and hero_date -%}
-{%- set include_article_head = true -%}
-{%- endif -%}
-{%- if include_reading_time and hero_reading_time > 0 -%}
-{%- set include_article_head = true -%}
-{%- endif -%}
-{%- if include_category and hero_category -%}
-{%- set include_article_head = true -%}
-{%- endif -%}
-{%- if include_tags and hero_tags | length > 0 -%}
-{%- set include_article_head = true -%}
-{%- endif -%}
 
 {%- set hero_title_color = hero.title_color | default(value='') -%}
 {%- set hero_text_color = hero.text_color | default(value='') -%}
@@ -58,7 +32,6 @@
 {%- set hero_lighten = hero.lighten | default(value=0.2) -%}
 {%- set hero_class_name = hero.class_name | default(value="") -%}
 
-{%- if include_article_head -%}
 {%- <ui.hero
 images={hero.images}
 id={hero_id}
@@ -76,28 +49,16 @@ class_name={hero_class_name}
     reading_time={hero_reading_time}
     category={hero_category}
     tags={hero_tags}
-    show_title={include_title}
-    show_description={include_description}
-    show_date={include_date}
-    show_reading_time={include_reading_time}
-    show_category={include_category}
-    show_tags={include_tags}
+    show_title={true}
+    show_description={true}
+    show_date={true}
+    show_reading_time={true}
+    show_category={true}
+    show_tags={true}
     title_color={hero_title_color}
     text_color={hero_text_color}
     class_name="article-head--hero"
 /> }}
 {% </ui.hero> %}
-{%- else -%}
-{{ <ui.hero
-images={hero.images}
-id={hero_id}
-image_width={hero_image_width}
-image_height={hero_image_height}
-height={hero_height}
-slider={hero_slider}
-lighten={hero_lighten}
-class_name={hero_class_name}
-/> }}
-{%- endif -%}
 {%- endif -%}
 {%- endif -%}
