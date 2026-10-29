@@ -1,4 +1,5 @@
 .hero {
+    --hero-text-color: var(--pico-color);
     --hero-control-color: var(--pico-primary-inverse);
     --hero-control-background: rgb(0 0 0 / 35%);
     --hero-control-hover-color: var(--pico-primary);
@@ -16,7 +17,7 @@
     min-height: var(--hero-height, 28rem);
     isolation: isolate;
     overflow: hidden;
-    color: var(--pico-primary-inverse);
+    color: var(--hero-text-color);
 
     &::before {
         position: absolute;
@@ -104,12 +105,9 @@
     margin-bottom: 0;
 }
 
-.article-head {
-    color: var(--article-head-text-color, inherit);
-}
-
-.article-head__title {
-    color: var(--article-head-title-color, inherit);
+.hero .hero__content,
+.hero .hero__content * {
+    color: var(--hero-text-color);
 }
 
 .article-head__description > :first-child {

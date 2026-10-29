@@ -7,6 +7,7 @@
     height: string = 'auto',
     slider: bool = false,
     lighten: float = 0.2,
+    text_color: string = '',
     class_name: string = ''
 ) %}
 {%- set resolved_image_width = image_width -%}
@@ -26,7 +27,18 @@
 {%- set resolved_height = '100svh' -%}
 {%- endif -%}
 
-<section id="{{ id }}" class="hero{% if slider %} hero--slider{% endif %}{% if class_name %} {{ class_name }}{% endif %}" style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }};" >
+{%- set hero_text_color = config.extra.picolo | get(key="hero_text_color", default="default") -%}
+{%- if text_color -%}
+{%- set hero_text_color = text_color -%}
+{%- endif -%}
+{%- set resolved_hero_text_color = "var(--pico-color)" -%}
+{%- if hero_text_color == "inverse" -%}
+{%- set resolved_hero_text_color = "var(--pico-primary-inverse)" -%}
+{%- elif hero_text_color != "default" -%}
+{%- set resolved_hero_text_color = hero_text_color -%}
+{%- endif -%}
+
+<section id="{{ id }}" class="hero{% if slider %} hero--slider{% endif %}{% if class_name %} {{ class_name }}{% endif %}" style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }}; --hero-text-color: {{ resolved_hero_text_color }};" >
     <div class="hero__slides" {% if slider %} role="region" aria-label="Image slider" tabindex="0" {% endif %}>
     {%- for path in images %}
     {%- if slider or loop.first %}

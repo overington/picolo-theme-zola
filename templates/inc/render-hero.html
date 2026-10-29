@@ -22,14 +22,14 @@
 {%- endif -%}
 
 
-{%- set hero_title_color = hero.title_color | default(value='') -%}
-{%- set hero_text_color = hero.text_color | default(value='') -%}
+
 {%- set hero_image_width = hero.image_width | default(value=config.extra.picolo.image_defaults.hero_width) -%}
 {%- set hero_image_height = hero.image_height | default(value=config.extra.picolo.image_defaults.hero_height) -%}
 {%- set hero_id = hero.id | default(value="page-hero") -%}
 {%- set hero_height = hero.height | default(value="auto") -%}
 {%- set hero_slider = hero.slider | default(value=false) -%}
 {%- set hero_lighten = hero.lighten | default(value=0.2) -%}
+{%- set hero_text_color = hero.text_color | default(value="") -%}
 {%- set hero_class_name = hero.class_name | default(value="") -%}
 
 {%- <ui.hero
@@ -41,6 +41,7 @@ height={hero_height}
 slider={hero_slider}
 lighten={hero_lighten}
 class_name={hero_class_name}
+text_color={hero_text_color}
 > %}
 {{ <ui.article_head
     title={hero_title}
@@ -55,8 +56,6 @@ class_name={hero_class_name}
     show_reading_time={true}
     show_category={true}
     show_tags={true}
-    title_color={hero_title_color}
-    text_color={hero_text_color}
     class_name="article-head--hero"
 /> }}
 {% </ui.hero> %}

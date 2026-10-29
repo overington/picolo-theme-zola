@@ -119,6 +119,25 @@ The `pico_theme` option allows you to customize the color scheme. Available opti
 
 See [PicoCSS Color Schemes](https://picocss.com/docs/colors) for previews of each theme.
 
+### Hero text color
+
+Set one site-wide color mode for all hero text in `zola.toml`:
+
+```toml
+[extra.picolo]
+hero_text_color = "default" # Pico's scheme-aware --pico-color
+```
+
+Options are `"default"` (uses `--pico-color`), `"inverse"` (uses `--pico-primary-inverse`), or any CSS color/value such as `"#f8f9fa"` or `"var(--pico-muted-color)"`. This applies to the hero title, description, metadata, and tags.
+
+To override the global setting for one page, set `text_color` in that page's `[extra.hero]` front matter:
+
+```toml
+[extra.hero]
+images = ["content/blog/example/hero.jpg"]
+text_color = "inverse" # or a CSS color/value
+```
+
 ### Pagination
 
 Control how sections display their pages with configurable pagination settings:

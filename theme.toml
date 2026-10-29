@@ -29,6 +29,9 @@ nav_items = [
 # Footer
 footer_text = "Built with Zola & PicoCSS"
 
+[extra.picolo]
+hero_text_color = "default"
+
 # Image resize defaults. Override these under [extra.picolo.image_defaults]
 # in the site's zola.toml.
 [extra.picolo.image_defaults]

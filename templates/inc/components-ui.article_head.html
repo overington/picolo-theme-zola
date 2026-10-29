@@ -11,15 +11,13 @@
     show_reading_time: bool = false,
     show_category: bool = false,
     show_tags: bool = false,
-    title_color: string = '',
-    text_color: string = '',
     class_name: string = ''
 ) -%}
 {%- set has_metadata = false -%}
 {%- if (show_date and date) or (show_reading_time and reading_time > 0) or (show_category and category) or (show_tags and tags | length > 0) -%}
 {%- set has_metadata = true -%}
 {%- endif -%}
-<header class="article-head{% if class_name %} {{ class_name }}{% endif %}"{% if title_color or text_color %} style="{% if title_color %}--article-head-title-color: {{ title_color }};{% endif %}{% if text_color %}--article-head-text-color: {{ text_color }};{% endif %}"{% endif %}>
+<header class="article-head{% if class_name %} {{ class_name }}{% endif %}"></header>
     {%- if show_title and title -%}
     <h1 class="article-head__title">{{ title }}</h1>
     {%- endif -%}
