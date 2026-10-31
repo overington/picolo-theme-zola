@@ -15,15 +15,7 @@
 
     <ul class="post-list">
         {%- for page in term.pages %}
-        <li class="post-preview">
-            <small class="post-date">{{ <ui.date /> }}</small>
-            <p class="post-title"><a href="{{ page.permalink }}">{{ page.title }}</a></p>
-            {% if page.description %}
-            <p class="post-description">{{ page.description }}</p>
-            {% elif page.summary %}
-            <div class="post-description">{{ page.summary | safe }}</div>
-            {% endif %}
-        </li>
+        {{ <ui.post_meta source={page} /> }}
         {%- endfor %}
     </ul>
 </section>

@@ -3,19 +3,7 @@
 {%- if hero.images and hero.images | length > 0 -%}
 {%- set hero_title = hero_source.title | default(value='') -%}
 {%- set hero_description = hero_source.description | default(value='') -%}
-{%- set hero_date = '' -%}
-{%- set source_date = hero_source | get(key="date", default='') -%}
-{%- if source_date -%}
-{%- set hero_date = source_date | date(format="%Y-%m-%d") -%}
-{%- endif -%}
-{%- set hero_reading_time = hero_source | get(key="reading_time", default=0) -%}
-{%- set hero_taxonomies = hero_source | get(key="taxonomies", default={}) -%}
-{%- set hero_category_terms = hero_taxonomies | get(key="categories", default=[]) -%}
-{%- set hero_category = '' -%}
-{%- if hero_category_terms | length > 0 -%}
-{%- set hero_category = hero_category_terms | first -%}
-{%- endif -%}
-{%- set hero_tags = hero_taxonomies | get(key="tags", default=[]) -%}
+
 
 {#- Values in [extra.hero] override page/section values when supplied. -#}
 {%- if hero.title -%}
@@ -48,19 +36,11 @@ lighten={hero_lighten}
 class_name={hero_class_name}
 text_color={hero_text_color}
 > %}
-{{ <ui.article_head
+{{ <ui.post_meta
+    source={hero_source}
+    variant="hero"
     title={hero_title}
     description={hero_description}
-    date={hero_date}
-    reading_time={hero_reading_time}
-    category={hero_category}
-    tags={hero_tags}
-    show_title={true}
-    show_description={true}
-    show_date={true}
-    show_reading_time={true}
-    show_category={true}
-    show_tags={true}
     class_name="article-head--hero"
 /> }}
 {% </ui.hero> %}

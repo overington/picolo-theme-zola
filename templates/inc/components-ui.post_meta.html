@@ -1,0 +1,94 @@
+{%- component ui.post_meta(
+    source: map,
+    variant: string = 'preview',
+    title: string = '',
+    description: string = '',
+    date: string = '',
+    class_name: string = ''
+) -%}
+{%- set meta_title = title -%}
+{%- if not meta_title -%}
+{%- set meta_title = source | get(key="title", default='') -%}
+{%- endif -%}
+{%- set meta_description = description -%}
+{%- if not meta_description -%}
+{%- set meta_description = source | get(key="description", default='') -%}
+{%- endif -%}
+{%- set meta_date = date -%}
+{%- if not meta_date -%}
+{%- set meta_date = source | get(key="date", default='') -%}
+{%- endif -%}
+{%- set meta_reading_time = source | get(key="reading_time", default=0) -%}
+{%- set source_taxonomies = source | get(key="taxonomies", default={}) -%}
+{%- set category_terms = source_taxonomies | get(key="categories", default=[]) -%}
+{%- set meta_category = '' -%}
+{%- if category_terms | length > 0 -%}
+{%- set meta_category = category_terms | first -%}
+{%- endif -%}
+{%- set meta_tags = source_taxonomies | get(key="tags", default=[]) -%}
+{%- set meta_permalink = source | get(key="permalink", default='') -%}
+{%- set meta_summary = source | get(key="summary", default='') -%}
+{%- set date_day = 0 -%}
+{%- set date_ordinal = "th" -%}
+{%- if meta_date -%}
+{%- set date_day = meta_date | date(format="%d") | int -%}
+{%- if date_day == 11 or date_day == 12 or date_day == 13 -%}
+{%- set date_ordinal = "th" -%}
+{%- elif date_day == 1 or date_day == 21 or date_day == 31 -%}
+{%- set date_ordinal = "st" -%}
+{%- elif date_day == 2 or date_day == 22 -%}
+{%- set date_ordinal = "nd" -%}
+{%- elif date_day == 3 or date_day == 23 -%}
+{%- set date_ordinal = "rd" -%}
+{%- endif -%}
+{%- endif -%}
+
+{%- if variant == "hero" -%}
+<header class="article-head{% if class_name %} {{ class_name }}{% endif %}">
+    {%- if meta_date %}
+    <small class="article-head__date article-head__date--hero"><time datetime="{{ meta_date | date(format="%Y-%m-%d") }}">{{ date_day }}{{ date_ordinal }} {{ meta_date | date(format="%B %Y") }}</time></small>
+    {%- endif %}
+    {%- if meta_title %}
+    <h1 class="article-head__title">{{ meta_title }}</h1>
+    {%- endif %}
+    {%- if meta_description %}
+    <div class="article-head__description">
+        {{- meta_description | markdown | safe -}}
+    </div>
+    {%- endif %}
+    {%- if meta_reading_time > 0 or meta_category or meta_tags | length > 0 %}
+    <div class="article-head__meta">
+        {%- if meta_reading_time > 0 %}
+        <span class="article-head__reading-time">{{ meta_reading_time }} min read</span>
+        {%- endif %}
+        {%- if meta_category %}
+        <span class="article-head__category"><span class="article-head__visually-hidden">Category: </span><a href="{{ get_taxonomy_url(kind="categories", term=meta_category) }}">{{ meta_category }}</a></span>
+        {%- endif %}
+        {%- if meta_tags | length > 0 %}
+        <ul class="article-head__tags" aria-label="Tags">
+            {%- for tag in meta_tags %}
+            <li><a href="{{ get_taxonomy_url(kind="tags", term=tag) }}">#{{ tag }}</a></li>
+            {%- endfor %}
+        </ul>
+        {%- endif %}
+    </div>
+    {%- endif %}
+</header>
+{%- else -%}
+<li class="post-preview">
+    {%- if meta_date %}
+    <small class="post-date"><time datetime="{{ meta_date | date(format="%Y-%m-%d") }}">{{ date_day }}{{ date_ordinal }} {{ meta_date | date(format="%B %Y") }}</time></small>
+    {%- endif %}
+    <p class="post-title"><a href="{{ meta_permalink }}">{{ meta_title }}</a></p>
+    {%- if meta_description %}
+    <p class="post-description">
+        {{ meta_description }}{% if meta_reading_time > 0 %} &middot; (<a href="{{ meta_permalink }}">{{ meta_reading_time }} min read</a>){% endif %}
+    </p>
+    {%- elif meta_summary %}
+    <div class="post-description">
+        {{ meta_summary | safe }}{% if meta_reading_time > 0 %} &middot; (<a href="{{ meta_permalink }}">{{ meta_reading_time }} min read</a>){% endif %}
+    </div>
+    {%- endif %}
+</li>
+{%- endif %}
+{%- endcomponent ui.post_meta -%}

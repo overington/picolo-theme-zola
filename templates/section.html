@@ -39,23 +39,7 @@
 
 <ul class="post-list">
 {%- for page in pages -%}
-<li class="post-preview">
-    <small class="post-date">{{ <ui.date /> }}</small>
-
-    <p class="post-title">
-        <a href="{{ page.permalink }}">{{ page.title }}</a>
-    </p>
-
-    {%- if page.description -%}
-    <p class="post-description">
-        {{ page.description }} &middot; (<a href="{{ page.permalink }}">{{ <ui.reading_time /> }}</a>)
-    </p>
-    {%- elif page.summary -%}
-    <p class="post-description">
-        {{ page.summary | safe }} &middot; (<a href="{{ page.permalink }}">{{ <ui.reading_time /> }}</a>)
-    </p>
-    {%- endif %}
-</li>
+{{ <ui.post_meta source={page} /> }}
 {%- endfor -%}
 </ul>
 
