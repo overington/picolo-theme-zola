@@ -31,17 +31,17 @@
         {%- if page.extra.image -%}
             {%- set image_alt = page.extra.image_alt | default(value=page.title) -%}
 {%- <ui.media_text path={page.colocated_path ~ page.extra.image} position={position} alt={image_alt} class_name="project-preview"> -%}
-## [{{ page.title }}]({{ page.permalink }})
+###### [{{ page.title }}]({{ page.permalink }})
 
-{% if page.description -%}{{ page.description }}{% elif page.summary -%}{{ page.summary | safe }}{% endif -%}
+{% if page.summary -%}{{ page.summary | safe }}{% elif page.description -%}{{ page.description }}{% endif -%}
 {%- </ui.media_text> %}
         {%- else -%}
         <article class="project-preview">
             <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
-            {%- if page.description -%}
-            <p>{{ page.description }}</p>
-            {%- elif page.summary -%}
+            {%- if page.summary -%}
             {{- page.summary | safe }}
+            {%- elif page.description -%}
+            <p>{{ page.description }}</p>
             {%- endif %}
         </article>
         {%- endif %}

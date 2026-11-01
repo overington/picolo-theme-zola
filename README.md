@@ -138,6 +138,37 @@ images = ["content/blog/example/hero.jpg"]
 text_color = "inverse" # or a CSS color/value
 ```
 
+### Hero image tint
+
+Tint a hero image by overlaying a CSS color. Set `tint_colour`, `tint_amount`, and `tint_method` in `[extra.hero]`:
+
+```toml
+[extra.hero]
+tint_colour = "#000000"
+tint_amount = 0.25
+tint_method = "multiply"
+```
+
+`tint_colour` accepts any CSS color and defaults to `"white"`. `tint_amount` is an opacity from `0` to `1` and defaults to `0`, so no tint is applied by default. `tint_method` selects the CSS blend mode and defaults to `"normal"`:
+
+- `"normal"` applies a standard translucent color overlay.
+- `"lighten"` keeps the lighter color values; `"screen"` is another lightening mode.
+- `"darken"` keeps the darker color values.
+- "multiply" multiplies the tint with the image, usually darkening it. Use a dark tint color; white has little or no effect with this mode.
+
+To combine adjustments, add an ordered `tint_layers` array. The single `tint_*` settings above are applied first when `tint_amount` is greater than zero; then these layers are applied in order:
+
+```toml
+[extra.hero]
+tint_layers = [
+    { colour = "white", amount = 0.12, method = "screen" },
+    { colour = "black", amount = 0.18, method = "multiply" },
+    { colour = "#A82229", amount = 0.12, method = "normal" },
+]
+```
+
+A white `screen` layer lifts shadows, a black `multiply` layer reduces highlights, and a final `normal` layer adds a color tint. Each layer has its own `colour`, `amount` (opacity from `0` to `1`), and `method`. The adjustments affect the full image, but their effect varies with each pixel's color; they are not separate shadow/highlight masks.
+
 ### Categories and tags
 
 Enable the `categories` and `tags` taxonomies in the site's `zola.toml`:

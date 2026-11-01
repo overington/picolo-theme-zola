@@ -1,12 +1,17 @@
 {% component ui.hero(
     @config: map,
     images: array,
+    image_alts: array = [],
     id: string = 'hero',
     image_width: integer = 0,
     image_height: integer = 0,
     height: string = 'auto',
     slider: bool = false,
-    lighten: float = 0.2,
+    slider_label: string = 'Image slider',
+    tint_colour: string = 'white',
+    tint_amount: float = 0.0,
+    tint_method: string = 'normal',
+    tint_layers: array = [],
     text_color: string = '',
     class_name: string = ''
 ) %}
@@ -38,10 +43,14 @@
 {%- set resolved_hero_text_color = hero_text_color -%}
 {%- endif -%}
 
-<section id="{{ id }}" class="hero{% if slider %} hero--slider{% endif %}{% if class_name %} {{ class_name }}{% endif %}" style="--hero-height: {{ resolved_height }}; --hero-lighten: {{ lighten }}; --hero-text-color: {{ resolved_hero_text_color }};" >
-    <div class="hero__slides" {% if slider %} role="region" aria-label="Image slider" tabindex="0" {% endif %}>
+<section id="{{ id }}" class="hero{% if slider %} hero--slider{% endif %}{% if class_name %} {{ class_name }}{% endif %}" style="--hero-height: {{ resolved_height }}; --hero-text-color: {{ resolved_hero_text_color }};" >
+    <div class="hero__slides" {% if slider %} role="region" aria-label="{{ slider_label }}" tabindex="0" {% endif %}>
     {%- for path in images %}
     {%- if slider or loop.first %}
+    {%- set image_alt = '' -%}
+    {%- if image_alts | length > loop.index0 -%}
+    {%- set image_alt = image_alts[loop.index0] -%}
+    {%- endif -%}
     {%- set image = resize_image(
         path=path,
         width=resolved_image_width,
@@ -49,11 +58,18 @@
         op="fill"
     ) -%}
         <div class="hero__slide" data-hero-slide="{{ loop.index0 }}">
-            <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="" aria-hidden="true" >
+            <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image_alt }}"{% if not image_alt %} aria-hidden="true"{% endif %} >
         </div>
     {%- endif %}
     {%- endfor %}
     </div>
+    <span class="hero__tint-layer" aria-hidden="true" style="--hero-tint-colour: {{ tint_colour }}; --hero-tint-amount: {{ tint_amount }}; --hero-tint-method: {{ tint_method }};"></span>
+    {%- for tint_layer in tint_layers -%}
+    {%- set layer_colour = tint_layer.colour | default(value="white") -%}
+    {%- set layer_amount = tint_layer.amount | default(value=0.0) -%}
+    {%- set layer_method = tint_layer.method | default(value="normal") -%}
+    <span class="hero__tint-layer" aria-hidden="true" style="--hero-tint-colour: {{ layer_colour }}; --hero-tint-amount: {{ layer_amount }}; --hero-tint-method: {{ layer_method }};"></span>
+    {%- endfor %}
 
     {%- if body or (slider and images | length > 1) %}
     {%- set has_arrows = slider and images | length > 1 -%}
@@ -66,7 +82,7 @@
         </nav>
         {%- endif %}{# has_arrows #}
 
-        {%- if body %}
+        {%- if body | trim %}
         <div class="hero__content">
         {{- body | markdown | safe -}}
         </div>
