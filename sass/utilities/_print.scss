@@ -2,7 +2,8 @@
 
 @media print {
 
-    header nav,
+    .site-header:has(nav.site-nav),
+    .site-nav,
     footer {
         display: none;
     }

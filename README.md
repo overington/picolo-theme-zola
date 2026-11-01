@@ -159,6 +159,14 @@ tags = ["writing", "notes"]
 
 The theme renders the taxonomy index pages at `/categories/` and `/tags/`, term pages such as `/categories/notes/` and `/tags/writing/`, and links the category and tags in `ui.article_head` to their corresponding term pages.
 
+Set widths for taxonomy index and term pages in `config.toml` with `extra.taxonomy_container_widths`:
+
+```toml
+[extra.taxonomy_container_widths]
+tags = "3xl"
+categories = "4xl"
+```
+
 ### Pagination
 
 Control how sections display their pages with configurable pagination settings:
@@ -181,6 +189,32 @@ template = "section.html"
 - `pagination_enabled = true` (default): Sections with `paginate_by` show pagination controls (Previous/Next buttons)
 - `pagination_enabled = false`: Hides pagination controls but sections with `paginate_by` still show posts page-by-page
 - To show **all posts on one page**: Remove the `paginate_by` line from the section's front matter
+
+### Container widths
+
+The theme provides these max-width tokens: `sm` (24rem), `md` (28rem), `lg` (32rem), `xl` (36rem), `2xl` (42rem), `3xl` (48rem), and `4xl` (56rem).
+
+Blog post containers use responsive widths by default: 24rem from 576px, 32rem from 768px, 36rem from 1024px, and 42rem from 1280px and wider.
+
+Set a site-wide default in `config.toml`:
+
+```toml
+[extra]
+container_width = "4xl"
+```
+
+Override it on an individual page, post, or section using its front matter:
+
+```toml
+[extra]
+container_width = "3xl"
+```
+
+Page and section settings take precedence over the site-wide default. The base template applies the selected width to content containers and hero article headers. Taxonomy pages can use the per-taxonomy settings shown above.
+
+## Print styles
+
+When printing, the theme hides the site header and navigation, along with the footer. Page content remains visible; links are underlined and their destination URLs are printed after the link text.
 
 ## Customization
 

@@ -24,13 +24,6 @@ pico_theme = "blue"  # Options: "default", "indigo", "blue", "red", "pink", "fuc
 site_author = "Your Name"
 site_description = "A minimal blog built with Zola and PicoCSS"
 
-# Homepage settings
-# show_homepage_section =   # Set to true to display a section on homepage
-#homepage_section = "blog"  # Required if show_homepage_section = true (e.g., "blog" or "posts")
-#homepage_section_title = "Recent Posts"  # Optional: Title for the section
-#homepage_section_limit = 5  # Optional: Number of posts to display
-#homepage_section_button_text = "View all posts →"  # Optional: Text for the "view all" button
-
 # Pagination settings
 pagination_enabled = true              # Global toggle to enable/disable pagination
 pagination_default_items = 10          # Default number of items per page (for documentation)
@@ -47,3 +40,7 @@ nav_items = [
 show_footer = true  # Set to false to hide the footer_text
 footer_text = "Built with Zola & PicoCSS"
 #footer_extra_content = "&copy; 2025 Your Name | <a href=\"/privacy\">Privacy</a>"  # Optional: Additional HTML content (displayed above footer_text)
+
+[extra.taxonomy_container_widths]
+tags = "3xl"
+categories = "4xl"
