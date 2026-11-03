@@ -20,7 +20,8 @@
     <link rel="stylesheet" href="{{ get_url(path="main.css") }}">
     {%- block extra_head %}{% endblock %}
 </head>
-{%- set content_width = config.extra | get(key="container_width", default="") -%}
+{%- set content_width = config.extra | get(key="container_width", default="4xl") -%}
+{%- set header_content_width = config.extra | get(key="header_content_width", default="") -%}
 {%- if taxonomy is defined -%}
 {%- set taxonomy_container_widths = config.extra | get(key="taxonomy_container_widths", default={}) -%}
 {%- set taxonomy_width = taxonomy_container_widths | get(key=taxonomy.name, default="") -%}
@@ -30,31 +31,26 @@
 {%- endif -%}
 {%- if section is defined -%}
 {%- set section_width = section.extra | get(key="container_width", default="") -%}
+{%- set section_header_width = section.extra | get(key="header_content_width", default="") -%}
 {%- if section_width -%}
 {%- set content_width = section_width -%}
+{%- endif -%}
+{%- if section_header_width -%}
+{%- set header_content_width = section_header_width -%}
 {%- endif -%}
 {%- endif -%}
 {%- if page is defined -%}
 {%- set page_width = page.extra | get(key="container_width", default="") -%}
+{%- set page_header_width = page.extra | get(key="header_content_width", default="") -%}
 {%- if page_width -%}
 {%- set content_width = page_width -%}
 {%- endif -%}
+{%- if page_header_width -%}
+{%- set header_content_width = page_header_width -%}
 {%- endif -%}
-{%- set content_width_class = "" -%}
-{%- if content_width == "sm" -%}
-{%- set content_width_class = "content-width--sm" -%}
-{%- elif content_width == "md" -%}
-{%- set content_width_class = "content-width--md" -%}
-{%- elif content_width == "lg" -%}
-{%- set content_width_class = "content-width--lg" -%}
-{%- elif content_width == "xl" -%}
-{%- set content_width_class = "content-width--xl" -%}
-{%- elif content_width == "2xl" -%}
-{%- set content_width_class = "content-width--2xl" -%}
-{%- elif content_width == "3xl" -%}
-{%- set content_width_class = "content-width--3xl" -%}
-{%- elif content_width == "4xl" -%}
-{%- set content_width_class = "content-width--4xl" -%}
+{%- endif -%}
+{%- if not header_content_width -%}
+{%- set header_content_width = content_width -%}
 {%- endif -%}
 <body>
     {%- block header %}
@@ -78,7 +74,7 @@
     {%- endblock header %}
 
     {%- block main %}
-    <main{% if content_width_class %} class="{{ content_width_class }}"{% endif %}{% block main_attributes %}{% endblock main_attributes %}>
+    <main class="content-width--{{ content_width }} header-content-width--{{ header_content_width }}"{% block main_attributes %}{% endblock main_attributes %}>
         {%- block hero %}{% endblock hero %}
         {%- block content %}{% endblock %}
     </main>

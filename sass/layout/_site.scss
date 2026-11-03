@@ -1,10 +1,12 @@
+@use "../settings/breakpoints" as bp;
+
 // Site-wide layout and containers.
 
 :root {
     --site-nav-height: 4.5rem;
 }
 
-@media (max-width: 767px) {
+@include bp.down(md) {
     :root {
         --site-nav-height: 7rem;
     }

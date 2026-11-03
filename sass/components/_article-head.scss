@@ -6,7 +6,6 @@
     --article-head-tag-radius: 999px;
     --article-head-hero-date-font-size: 0.85em;
     --article-head-hero-date-spacing: 0.5rem;
-    --article-head-hero-max-width: 68rem;
 }
 
 .hero .hero__content,
@@ -74,9 +73,4 @@
 
 .article-head--page {
     text-align: center;
-}
-
-.hero .article-head {
-    max-width: var(--article-head-hero-max-width);
-    margin-inline: auto;
 }

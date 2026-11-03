@@ -223,25 +223,25 @@ template = "section.html"
 
 ### Container widths
 
-The theme provides these max-width tokens: `sm` (24rem), `md` (28rem), `lg` (32rem), `xl` (36rem), `2xl` (42rem), `3xl` (48rem), and `4xl` (56rem).
+The theme provides these content-width tokens: `sm` (24rem), `md` (28rem), `lg` (32rem), `xl` (36rem), `2xl` (42rem), `3xl` (48rem), and `4xl` (56rem). Use `pico` to match PicoCSS `.container` max widths responsively, or `full` to use 100% of the available width. The `pico` option follows Pico's viewport widths: 510px at `sm`, 700px at `md`, 950px at `lg`, 1200px at `xl`, and 1450px at `xxl` (100% below `sm`). These content widths are independent of responsive breakpoints. All content types use the same site-wide default; if it is not configured, the theme uses `4xl`.
 
-Blog post containers use responsive widths by default: 24rem from 576px, 32rem from 768px, 36rem from 1024px, and 42rem from 1280px and wider.
-
-Set a site-wide default in `config.toml`:
+Set the default width and, optionally, a separate width for page/section headings and hero header content in `config.toml`:
 
 ```toml
 [extra]
 container_width = "4xl"
+header_content_width = "3xl" # Optional; defaults to the resolved container_width
 ```
 
-Override it on an individual page, post, or section using its front matter:
+Override either value for an individual page, post, or section using its front matter:
 
 ```toml
 [extra]
 container_width = "3xl"
+header_content_width = "xl" # Optional; applies to page/section and hero headers
 ```
 
-Page and section settings take precedence over the site-wide default. The base template applies the selected width to content containers and hero article headers. Taxonomy pages can use the per-taxonomy settings shown above.
+The page’s `extra` values take precedence over the section’s values, which take precedence over the site-wide defaults. `header_content_width` controls the heading/description area without changing the body width. Taxonomy pages use the same default and can still be overridden individually with `extra.taxonomy_container_widths` as shown above. Responsive rules use PicoCSS v2's breakpoint names and default thresholds: `sm` (576px), `md` (768px), `lg` (1024px), `xl` (1280px), and `xxl` (1536px). Theme media queries use the shared `bp.up()` and `bp.down()` mixins in `sass/settings/_breakpoints.scss`; `down(md)` means below 768px. The content-width tokens are defined separately in `sass/settings/_variables.scss`.
 
 ## Print styles
 

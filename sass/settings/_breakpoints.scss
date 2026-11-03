@@ -1,6 +1,6 @@
 @use "sass:map";
-//
-// Breakpoints, viewports and root font size
+// PicoCSS v2 defaults. Pico is loaded separately; the theme uses these thresholds
+// for its own responsive rules so its terminology follows Pico's sm/md/lg/xl/xxl scale.
 $breakpoints: () !default;
 $breakpoints: map.deep-merge(
   (
@@ -46,3 +46,21 @@ $breakpoints: map.deep-merge(
   ),
   $breakpoints
 );
+
+// Include the named breakpoint and larger viewports.
+@mixin up($name) {
+  $width: map.get($breakpoints, $name, breakpoint);
+
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+// Include viewports below the named breakpoint (e.g. down(md) ends at 767px).
+@mixin down($name) {
+  $width: map.get($breakpoints, $name, breakpoint);
+
+  @media (max-width: $width - 1px) {
+    @content;
+  }
+}

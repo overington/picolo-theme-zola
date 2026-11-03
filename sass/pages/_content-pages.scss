@@ -1,46 +1,18 @@
-@use "sass:map";
-@use "../settings/breakpoints" as bp;
 
 article.page {
     --pico-card-box-shadow: none;
     --pico-card-sectioning-background-color: var(--pico-background-color);
 }
 
-.container.page--post {
-    max-width: 100%;
-}
-
-$post-container-widths: (
-    sm: var(--container-sm),
-    md: var(--container-lg),
-    lg: var(--container-xl),
-    xl: var(--container-2xl)
-);
-
-@each $name, $width in $post-container-widths {
-    $breakpoint: map.get(bp.$breakpoints, $name, breakpoint);
-
-    @media (min-width: $breakpoint) {
-        .container.page--post {
-            max-width: $width;
-        }
+@each $size, $width in $content-widths {
+    main.content-width--#{$size} .container {
+        max-width: var(--container-#{$size});
     }
-}
 
-$content-container-widths: (
-    sm: var(--container-sm),
-    md: var(--container-md),
-    lg: var(--container-lg),
-    xl: var(--container-xl),
-    "2xl": var(--container-2xl),
-    "3xl": var(--container-3xl),
-    "4xl": var(--container-4xl)
-);
-
-@each $size, $width in $content-container-widths {
-    main.content-width--#{$size} .container,
-    main.content-width--#{$size} .hero .article-head {
-        max-width: $width;
+    main.header-content-width--#{$size} .page-header,
+    main.header-content-width--#{$size} .hero .article-head {
+        max-width: var(--container-#{$size});
+        margin-inline: auto;
     }
 }
 

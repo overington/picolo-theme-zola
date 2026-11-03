@@ -1,3 +1,5 @@
+@use "../settings/breakpoints" as bp;
+
 .hero {
     --hero-text-color: var(--pico-color);
     --hero-tint-colour: white;
@@ -225,7 +227,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@include bp.down(md) {
     .hero__layout {
         gap: 0.5rem;
         padding-inline: 0.75rem;

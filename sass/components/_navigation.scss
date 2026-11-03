@@ -31,9 +31,7 @@ $site-nav-type-scale: (
     --site-nav-link-font-size: 1rem;
 
     @each $name, $sizes in $site-nav-type-scale {
-        $breakpoint: map.get(bp.$breakpoints, $name, breakpoint);
-
-        @media (min-width: $breakpoint) {
+        @include bp.up($name) {
             --site-nav-brand-font-size: #{map.get($sizes, brand)};
             --site-nav-link-font-size: #{map.get($sizes, links)};
         }

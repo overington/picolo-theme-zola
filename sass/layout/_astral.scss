@@ -1,3 +1,5 @@
+@use "../settings/breakpoints" as bp;
+
 // Section Astral: layout enhancements built on Pico's semantic elements and variables.
 .astral {
     scroll-behavior: smooth;
@@ -109,7 +111,7 @@
     object-fit: cover;
 }
 
-@media (min-width: 768px) {
+@include bp.up(md) {
     .astral-card {
         grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.8fr);
     }

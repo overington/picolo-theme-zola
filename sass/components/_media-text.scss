@@ -19,7 +19,6 @@ $media-text-options: (
   xxl: (margin-block: 2.5rem, content-padding: 3rem, paragraph-base: 1.2rem, heading-base: 2.5rem)
 );
 
-$media-text-grid-breakpoint: map.get(bp.$breakpoints, md, breakpoint);
 
 .media-text {
     display: grid;
@@ -36,11 +35,11 @@ $media-text-grid-breakpoint: map.get(bp.$breakpoints, md, breakpoint);
     }
 
     @each $name, $options in $media-text-options {
-        $breakpoint: map.get(bp.$breakpoints, $name, breakpoint);
+
         $paragraph-base: map.get($options, paragraph-base);
         $heading-base: map.get($options, heading-base);
 
-        @media (min-width: $breakpoint) {
+        @include bp.up($name) {
             --media-text-margin-block: #{map.get($options, margin-block)};
             --media-text-content-padding: #{map.get($options, content-padding)};
 
@@ -101,7 +100,7 @@ $media-text-grid-breakpoint: map.get(bp.$breakpoints, md, breakpoint);
     margin-bottom: 0;
 }
 
-@media (min-width: $media-text-grid-breakpoint) {
+@include bp.up(md) {
     .media-text {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         align-items: stretch;
