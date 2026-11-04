@@ -40,6 +40,14 @@
 {%- endif -%}
 {%- endif -%}
 {%- if page is defined -%}
+{%- if page.ancestors | length > 0 -%}
+{%- set parent_section_path = page.ancestors | last -%}
+{%- set parent_section = get_section(path=parent_section_path) -%}
+{%- set parent_page_width = parent_section.extra | get(key="page_container_width", default="") -%}
+{%- if parent_page_width -%}
+{%- set content_width = parent_page_width -%}
+{%- endif -%}
+{%- endif -%}
 {%- set page_width = page.extra | get(key="container_width", default="") -%}
 {%- set page_header_width = page.extra | get(key="header_content_width", default="") -%}
 {%- if page_width -%}

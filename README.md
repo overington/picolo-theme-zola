@@ -241,7 +241,15 @@ container_width = "3xl"
 header_content_width = "xl" # Optional; applies to page/section and hero headers
 ```
 
-The page’s `extra` values take precedence over the section’s values, which take precedence over the site-wide defaults. `header_content_width` controls the heading/description area without changing the body width. Taxonomy pages use the same default and can still be overridden individually with `extra.taxonomy_container_widths` as shown above. Responsive rules use PicoCSS v2's breakpoint names and default thresholds: `sm` (576px), `md` (768px), `lg` (1024px), `xl` (1280px), and `xxl` (1536px). Theme media queries use the shared `bp.up()` and `bp.down()` mixins in `sass/settings/_breakpoints.scss`; `down(md)` means below 768px. The content-width tokens are defined separately in `sass/settings/_variables.scss`.
+A section can use one width for its listing and another default for its child pages. Set `page_container_width` in the section's `_index.md`:
+
+```toml
+[extra]
+container_width = "2xl"      # The section listing
+page_container_width = "3xl" # Pages rendered under this section
+```
+
+A child page's own `extra.container_width` overrides `page_container_width`. The section's `page_template` chooses which template renders those pages; the page width setting applies regardless of which page template is selected. `header_content_width` controls the heading/description area without changing the body width. Taxonomy pages use the site default and can still be overridden per taxonomy with `extra.taxonomy_container_widths` as shown above. Responsive rules use PicoCSS v2's breakpoint names and default thresholds: `sm` (576px), `md` (768px), `lg` (1024px), `xl` (1280px), and `xxl` (1536px). Theme media queries use the shared `bp.up()` and `bp.down()` mixins in `sass/settings/_breakpoints.scss`; `down(md)` means below 768px. The content-width tokens are defined separately in `sass/settings/_variables.scss`.
 
 ## Print styles
 
