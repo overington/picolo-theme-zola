@@ -105,7 +105,7 @@ pagination_default_items = 10          # Default number of items per page (for d
 
 # Footer
 show_footer = true                  # Set to false to hide the footer
-footer_text = "© 2025 Your Name • Built with Zola & PicoCSS"
+footer_text = "© 2026 Your Name • Built with Zola & PicoCSS"
 footer_extra_content = ""           # Optional: Additional HTML content (displayed above footer_text)
 # Example: footer_extra_content = "&copy; 2025 Your Name | <a href=\"/privacy\">Privacy</a>"
 ```
@@ -345,6 +345,24 @@ Create highlighted callout boxes:
 This is a callout box for important information.
 {{/* end */}}
 ```
+
+### Video player
+
+Embed a YouTube video by providing its URL and an accessible title:
+
+```markdown
+{{ <ui.video youtube_url="https://www.youtube.com/watch?v=VIDEO_ID" title="Project video" caption="Optional text shown below the video." /> }}
+```
+
+The component also accepts `youtu.be` share URLs, YouTube `/embed/`, `/shorts/`, and `/live/` URLs. It creates a responsive, lazy-loaded embed using YouTube's privacy-enhanced domain.
+
+For a local video, provide its Zola path instead. A co-located asset can use Zola's `@/` syntax:
+
+```markdown
+{{ <ui.video video_file="@/projects/example/demo.mp4" title="Project demo" poster="@/projects/example/poster.jpg" captions_file="@/projects/example/captions.vtt" caption="Optional video caption." /> }}
+```
+
+For files in `static/`, use the path relative to that directory; for example, `video_file="videos/demo.mp4"` refers to `static/videos/demo.mp4`. The local player uses native controls and preloads metadata. `mime_type` defaults to `video/mp4`; set it to `video/webm` for WebM files. `poster` and `captions_file` are optional, and the captions file should be WebVTT. Use exactly one of `youtube_url` or `video_file`. Set a descriptive `title` for the YouTube iframe or local video player.
 
 ## Development
 

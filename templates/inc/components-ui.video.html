@@ -1,0 +1,75 @@
+{% component ui.video(
+    youtube_url: string = '',
+    video_file: string = '',
+    title: string = '',
+    mime_type: string = 'video/mp4',
+    poster: string = '',
+    captions_file: string = '',
+    captions_lang: string = 'en',
+    captions_label: string = 'English',
+    caption: string = '',
+    class_name: string = ''
+) %}
+{%- set video_title = title -%}
+{%- if not video_title -%}
+{%- set video_title = 'Video player' -%}
+{%- endif -%}
+
+{%- if youtube_url and video_file -%}
+<figure class="video-embed{% if class_name %} {{ class_name }}{% endif %}">
+    <p class="video-embed__error" role="status">Set either <code>youtube_url</code> or <code>video_file</code>, not both.</p>
+</figure>
+{%- elif youtube_url -%}
+{%- set youtube_id = '' -%}
+{%- if youtube_url is containing(pat='youtu.be/') -%}
+{%- set youtube_id = youtube_url | split(pat='youtu.be/') | last | split(pat='?') | first | split(pat='/') | first | split(pat='#') | first -%}
+{%- elif youtube_url is containing(pat='/embed/') -%}
+{%- set youtube_id = youtube_url | split(pat='/embed/') | last | split(pat='?') | first | split(pat='/') | first | split(pat='#') | first -%}
+{%- elif youtube_url is containing(pat='/shorts/') -%}
+{%- set youtube_id = youtube_url | split(pat='/shorts/') | last | split(pat='?') | first | split(pat='/') | first | split(pat='#') | first -%}
+{%- elif youtube_url is containing(pat='/live/') -%}
+{%- set youtube_id = youtube_url | split(pat='/live/') | last | split(pat='?') | first | split(pat='/') | first | split(pat='#') | first -%}
+{%- elif youtube_url is containing(pat='v=') -%}
+{%- set youtube_id = youtube_url | split(pat='v=') | last | split(pat='&') | first | split(pat='#') | first -%}
+{%- endif -%}
+<figure class="video-embed{% if class_name %} {{ class_name }}{% endif %}">
+    {%- if youtube_id -%}
+    {%- set embed_url = 'https://www.youtube-nocookie.com/embed/' ~ youtube_id -%}
+    <iframe
+        class="video-embed__frame"
+        src="{{ embed_url }}"
+        title="{{ video_title }}"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+    ></iframe>
+    {%- else -%}
+    <p class="video-embed__error" role="status">Could not identify a video in this YouTube URL. Use a watch, youtu.be, embed, shorts, or live URL.</p>
+    {%- endif -%}
+    {%- if caption -%}
+    <figcaption class="video-embed__caption">{{ caption }}</figcaption>
+    {%- endif %}
+</figure>
+{%- elif video_file -%}
+{%- set video_src = get_url(path=video_file) -%}
+{%- set poster_src = '' -%}
+{%- if poster -%}
+{%- set poster_src = get_url(path=poster) -%}
+{%- endif -%}
+{%- set captions_src = '' -%}
+{%- if captions_file -%}
+{%- set captions_src = get_url(path=captions_file) -%}
+{%- endif -%}
+<figure class="video-embed{% if class_name %} {{ class_name }}{% endif %}">
+<video class="video-embed__player" controls preload="metadata" playsinline aria-label="{{ video_title }}"{% if poster_src %} poster="{{ poster_src }}"{% endif %}>
+<source src="{{ video_src }}" type="{{ mime_type }}">
+{%- if captions_src %}<track kind="captions" src="{{ captions_src }}" srclang="{{ captions_lang }}" label="{{ captions_label }}">{%- endif %}
+Your browser does not support HTML video. <a href="{{ video_src }}">Open the video file</a>.
+</video>
+{%- if caption -%}
+<figcaption class="video-embed__caption">{{ caption }}</figcaption>
+{%- endif %}
+</figure>
+{%- endif -%}
+{% endcomponent ui.video %}

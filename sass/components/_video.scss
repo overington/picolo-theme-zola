@@ -1,0 +1,31 @@
+.video-embed {
+    margin-inline: 0;
+    margin-block: 0 var(--pico-spacing);
+}
+
+.video-embed__frame,
+.video-embed__player {
+    display: block;
+    width: 100%;
+}
+
+.video-embed__frame {
+    aspect-ratio: 16 / 9;
+    border: 0;
+}
+
+.video-embed__player {
+    height: auto;
+}
+
+.video-embed__caption {
+    margin-top: calc(var(--pico-spacing) / 2);
+    color: var(--pico-muted-color);
+    font-size: 0.875em;
+}
+
+.video-embed__error {
+    padding: var(--pico-spacing);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+}
