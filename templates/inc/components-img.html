@@ -1,11 +1,16 @@
-{% component img.resize(@config: map, src: string, alt: string) -%}
+{% component img.resize(@config: map, src: string, alt: string, modal: bool = true) -%}
 {%- set image = resize_image(
     path=src,
     width=config.extra.picolo.image_defaults.inline_width,
     op="fit_width",
     format="webp"
 ) -%}
+{%- if modal -%}
+{%- set modal_image = resize_image(path=src, width=2400, height=2400, op="fit", format="webp") -%}
+<a class="image-modal-trigger" href="{{ modal_image.url }}" data-image-modal-trigger data-image-modal-src="{{ modal_image.url }}" data-image-modal-alt="{{ alt }}" aria-label="View larger image{% if alt %}: {{ alt }}{% endif %}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}"></a>
+{%- else -%}
 <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}">
+{%- endif -%}
 {%- endcomponent img.resize %}
 
 
@@ -18,7 +23,8 @@
     max_height: integer = 0,
     alt: string = '',
     class_name: string = '',
-    loading: string = 'lazy'
+    loading: string = 'lazy',
+    modal: bool = true
 ) -%}
 {%- set resolved_max_width = max_width -%}
 {%- set resolved_max_height = max_height -%}
@@ -34,13 +40,10 @@
     height=resolved_max_height,
     op="fit"
 ) -%}
-<img
-src="{{ image.url }}"
-width="{{ image.width }}"
-height="{{ image.height }}"
-alt="{{ alt }}"
-{% if class_name %}class="{{ class_name }}"{% endif %}
-loading="{{ loading }}"
-decoding="async"
->
+{%- if modal -%}
+{%- set modal_image = resize_image(path=path, width=2400, height=2400, op="fit", format="webp") -%}
+<a class="image-modal-trigger" href="{{ modal_image.url }}" data-image-modal-trigger data-image-modal-src="{{ modal_image.url }}" data-image-modal-alt="{{ alt }}" aria-label="View larger image{% if alt %}: {{ alt }}{% endif %}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}"{% if class_name %} class="{{ class_name }}"{% endif %} loading="{{ loading }}" decoding="async"></a>
+{%- else -%}
+<img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}"{% if class_name %} class="{{ class_name }}"{% endif %} loading="{{ loading }}" decoding="async">
+{%- endif -%}
 {%- endcomponent ui.image_fit %}

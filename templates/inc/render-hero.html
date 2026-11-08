@@ -21,6 +21,9 @@
 {%- set hero_id = hero.id | default(value="page-hero") -%}
 {%- set hero_height = hero.height | default(value="auto") -%}
 {%- set hero_slider = hero.slider | default(value=false) -%}
+{%- set hero_slider_label = hero.slider_label | default(value="") -%}
+{%- set hero_modal_default = hero_modal_default | default(value=true) -%}
+{%- set hero_modal = hero.modal | default(value=hero_modal_default) -%}
 {%- set hero_tint_colour = hero.tint_colour | default(value="white") -%}
 {%- set hero_tint_amount = hero.tint_amount | default(value=0.0) -%}
 {%- set hero_tint_method = hero.tint_method | default(value="normal") -%}
@@ -29,18 +32,20 @@
 {%- set hero_class_name = hero.class_name | default(value="") -%}
 
 {%- <ui.hero
-images={hero.images}
-id={hero_id}
-image_width={hero_image_width}
-image_height={hero_image_height}
-height={hero_height}
-slider={hero_slider}
-tint_colour={hero_tint_colour}
-tint_amount={hero_tint_amount}
-tint_method={hero_tint_method}
-tint_layers={hero_tint_layers}
-class_name={hero_class_name}
-text_color={hero_text_color}
+     images={hero.images}
+     id={hero_id}
+     image_width={hero_image_width}
+     image_height={hero_image_height}
+     height={hero_height}
+     slider={hero_slider}
+     modal={hero_modal}
+     slider_label={hero_slider_label}
+     tint_colour={hero_tint_colour}
+     tint_amount={hero_tint_amount}
+     tint_method={hero_tint_method}
+     tint_layers={hero_tint_layers}
+     class_name={hero_class_name}
+     text_color={hero_text_color}
 > %}
 {{ <ui.post_meta
     source={hero_source}

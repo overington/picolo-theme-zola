@@ -1,0 +1,207 @@
+.image-modal-trigger {
+    display: inline-block;
+    cursor: zoom-in;
+}
+
+.image-modal-trigger img {
+    cursor: inherit;
+}
+
+.image-modal-trigger:focus-visible {
+    outline: 3px solid var(--pico-primary);
+    outline-offset: 3px;
+}
+
+.hero__image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.image-modal {
+    --image-modal-control-color: var(--pico-primary-inverse);
+    --image-modal-control-background: rgb(0 0 0 / 35%);
+    --image-modal-control-hover-background: var(--pico-primary-inverse);
+
+    width: min(96vw, 100rem);
+    max-width: none;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.image-modal > article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: none;
+    max-height: calc(100vh - var(--pico-spacing) * 2);
+    margin: 0;
+    overflow: hidden;
+}
+
+.image-modal__header {
+    margin: 0;
+    padding: 0.75rem 4rem 0.75rem 1rem;
+}
+
+.image-modal__header h2 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.image-modal__stage {
+    display: grid;
+    flex: 1 1 auto;
+    min-height: 0;
+    place-items: center;
+}
+
+.image-modal__canvas {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image-modal__image {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: min(78vh, 70rem);
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.image-modal__navigation {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    display: grid;
+    width: 25%;
+    margin: 0;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--image-modal-control-color);
+    cursor: pointer;
+    transition: background-color 180ms ease;
+}
+
+.image-modal__navigation--previous {
+    left: 0;
+}
+
+.image-modal__navigation--next {
+    right: 0;
+}
+
+.image-modal__navigation:hover,
+.image-modal__navigation:active {
+    border: 0;
+    background-color: rgb(0 0 0 / 20%);
+    box-shadow: none;
+}
+
+.image-modal__navigation:focus-visible {
+    border: 0;
+    outline: 2px solid var(--image-modal-control-color);
+    outline-offset: -0.25rem;
+    background-color: rgb(0 0 0 / 20%);
+}
+
+.image-modal__chevron {
+    display: block;
+    width: 0.65rem;
+    height: 0.65rem;
+    border: solid currentColor;
+    border-width: 0 0.15rem 0.15rem 0;
+}
+
+.image-modal__chevron--left {
+    transform: rotate(135deg);
+}
+
+.image-modal__chevron--right {
+    transform: rotate(-45deg);
+}
+
+.image-modal__dots {
+    position: absolute;
+    z-index: 3;
+    bottom: var(--pico-block-spacing-vertical);
+    left: 50%;
+    display: flex;
+    gap: 0.5rem;
+    transform: translateX(-50%);
+}
+
+.image-modal__dots button {
+    display: grid;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin: 0;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--image-modal-control-color);
+    border-radius: 50%;
+    background-color: var(--image-modal-control-background);
+    box-shadow: none;
+}
+
+.image-modal__dots button[aria-current="true"] {
+    background-color: var(--image-modal-control-color);
+    transform: scale(1.2);
+}
+
+.image-modal__dots button:hover,
+.image-modal__dots button:focus-visible {
+    background-color: var(--image-modal-control-hover-background);
+}
+
+.image-modal__dots button:focus-visible {
+    outline: 2px solid var(--image-modal-control-color);
+    outline-offset: 3px;
+}
+
+.image-modal__close {
+    position: absolute;
+    z-index: 4;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(0 0 0 / 55%);
+    box-shadow: none;
+    color: white;
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+.image-modal [hidden] {
+    display: none !important;
+}
+
+@media (max-width: 576px) {
+    .image-modal__navigation {
+        width: 22%;
+    }
+
+    .image-modal__image {
+        max-height: 72vh;
+    }
+
+    .image-modal__dots {
+        bottom: 0.75rem;
+    }
+}

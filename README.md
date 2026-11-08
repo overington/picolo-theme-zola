@@ -346,6 +346,39 @@ This is a callout box for important information.
 {{/* end */}}
 ```
 
+### Image viewer modal
+
+Resized images rendered with `img.resize`, `ui.image_fit`, `ui.media_text`, and `ui.hero` open in an image modal by default. A single image opens by itself. A `ui.hero` slider opens as a gallery with full-height left/right navigation hotspots, slide-selection dots, keyboard arrow-key support, and synchronized slider position. The modal uses the larger image variant, and the image link still works as a fallback if JavaScript is unavailable. Set `slider_label` on `ui.hero` (or `extra.hero.slider_label` in page front matter) to show a heading above the modal gallery; when omitted, no visible heading is rendered. The slider region keeps an accessible `Image slider` label as a fallback. For example:
+
+```toml
+[extra.hero]
+images = ["content/projects/example/one.jpg", "content/projects/example/two.jpg"]
+slider = true
+slider_label = "Project development photos"
+```
+
+Disable the modal for an individual component with `modal={false}`:
+
+```markdown
+{{ <ui.image_fit path={page.colocated_path ~ 'photo.jpg'} alt="A description of the image" modal={false} /> }}
+```
+
+For `ui.media_text`, set `link_url` to make the image navigate to a destination instead of opening the modal. `link_url` takes precedence over `modal`:
+
+```markdown
+{% <ui.media_text path={page.colocated_path ~ 'photo.jpg'} alt="A description of the image" link_url={page.permalink}> %}
+Project description goes here.
+{% </ui.media_text> %}
+```
+
+For a page or section hero, set `modal = false` in `[extra.hero]` front matter:
+
+```toml
+[extra.hero]
+images = ["content/blog/example/hero.jpg"]
+modal = false
+```
+
 ### Video player
 
 Embed a YouTube video by providing its URL and an accessible title:

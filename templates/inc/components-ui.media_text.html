@@ -8,7 +8,9 @@
     image_height: integer = 0,
     height: string = 'auto',
     alt: string = '',
-    class_name: string = ''
+    class_name: string = '',
+    modal: bool = true,
+    link_url: string = ''
 ) %}
 {%- set resolved_image_width = image_width -%}
 {%- set resolved_image_height = image_height -%}
@@ -28,6 +30,9 @@
 {%- endif -%}
 
 {%- set image = resize_image( path=path, width=resolved_image_width, height=resolved_image_height, op="fill" ) -%}
+{%- if modal and not link_url -%}
+{%- set modal_image = resize_image(path=path, width=2400, height=2400, op="fit", format="webp") -%}
+{%- endif -%}
 
 {%- set position_class = 'media-text--left' -%}
 {%- if position == 'right' -%}
@@ -35,7 +40,13 @@
 {%- endif -%}
 <div class="media-text {{ position_class }}{% if height == 'header' %} media-text--header-height{% endif %}{% if class_name %} {{ class_name }}{% endif %}" {% if resolved_height != 'auto' %} style="--media-text-height: {{ resolved_height }};" {% endif %} >
     <figure class="media-text__image">
-        <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}" >
+        {%- if link_url -%}
+        <a class="media-text__link" href="{{ link_url }}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}"></a>
+        {%- elif modal -%}
+        <a class="image-modal-trigger" href="{{ modal_image.url }}" data-image-modal-trigger data-image-modal-src="{{ modal_image.url }}" data-image-modal-alt="{{ alt }}" aria-label="View larger image{% if alt %}: {{ alt }}{% endif %}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}"></a>
+        {%- else -%}
+        <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}">
+        {%- endif %}
     </figure>
     <div class="media-text__content">
         {{- body | markdown | safe -}}

@@ -59,6 +59,12 @@ $media-text-options: (
     overflow: hidden;
 }
 
+.media-text__image > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .media-text__image img {
     display: block;
     width: 100%;

@@ -98,9 +98,26 @@
             </footer>
         {%- endblock footer -%}
     {%- endif -%}
+    <dialog class="image-modal" data-image-modal aria-label="Image viewer">
+        <article>
+            <header class="image-modal__header" data-image-modal-header hidden>
+                <h2 id="image-modal-title" data-image-modal-title></h2>
+            </header>
+            <button type="button" class="image-modal__close" data-image-modal-close aria-label="Close image viewer">×</button>
+            <div class="image-modal__stage">
+                <div class="image-modal__canvas">
+                    <img class="image-modal__image" data-image-modal-image alt="" decoding="async">
+                    <button type="button" class="image-modal__navigation image-modal__navigation--previous" data-image-modal-previous aria-label="Previous image" hidden><span class="image-modal__chevron image-modal__chevron--left" aria-hidden="true"></span></button>
+                    <button type="button" class="image-modal__navigation image-modal__navigation--next" data-image-modal-next aria-label="Next image" hidden><span class="image-modal__chevron image-modal__chevron--right" aria-hidden="true"></span></button>
+                    <nav class="image-modal__dots" data-image-modal-dots aria-label="Choose image" hidden></nav>
+                </div>
+            </div>
+        </article>
+    </dialog>
     <!-- Minimal theme switcher -->
     <script src="{{ get_url(path="js/minimal-theme-switcher.js") }}"></script>
     <script src="{{ get_url(path="js/hero-slider.js") }}"></script>
+    <script src="{{ get_url(path="js/image-modal.js") }}"></script>
 </body>
 
 </html>
