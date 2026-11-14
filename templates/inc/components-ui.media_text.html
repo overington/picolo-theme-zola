@@ -1,8 +1,20 @@
-{# Responsive image/content block with a consistent image crop #}
+{# Responsive media/content block for images and video #}
 
 {% component ui.media_text(
     @config: map,
-    path: string,
+    path: string = '',
+    youtube_url: string = '',
+    video_file: string = '',
+    title: string = '',
+    mime_type: string = 'video/mp4',
+    poster: string = '',
+    loading: string = '',
+    preload: string = 'none',
+    aspect_ratio: string = '16 / 9',
+    captions_file: string = '',
+    captions_lang: string = 'en',
+    captions_label: string = 'English',
+    caption: string = '',
     position: string = 'left',
     image_width: integer = 0,
     image_height: integer = 0,
@@ -21,6 +33,14 @@
 {%- set resolved_image_height = config.extra.picolo.image_defaults.media_text_height -%}
 {%- endif -%}
 
+{%- set resolved_loading = loading -%}
+{%- if not resolved_loading -%}
+{%- set resolved_loading = 'lazy' -%}
+{%- if height == 'header' -%}
+{%- set resolved_loading = 'eager' -%}
+{%- endif -%}
+{%- endif -%}
+
 {%- set resolved_height = height -%}
 
 {%- if height == 'header' -%}
@@ -29,9 +49,15 @@
 {%- set resolved_height = '100svh' -%}
 {%- endif -%}
 
+{%- set has_conflicting_sources = false -%}
+{%- if (path and youtube_url) or (path and video_file) or (youtube_url and video_file) -%}
+{%- set has_conflicting_sources = true -%}
+{%- endif -%}
+{%- if path and not youtube_url and not video_file -%}
 {%- set image = resize_image( path=path, width=resolved_image_width, height=resolved_image_height, op="fill" ) -%}
 {%- if modal and not link_url -%}
 {%- set modal_image = resize_image(path=path, width=2400, height=2400, op="fit", format="webp") -%}
+{%- endif -%}
 {%- endif -%}
 
 {%- set position_class = 'media-text--left' -%}
@@ -39,15 +65,39 @@
 {%- set position_class = 'media-text--right' -%}
 {%- endif -%}
 <div class="media-text {{ position_class }}{% if height == 'header' %} media-text--header-height{% endif %}{% if class_name %} {{ class_name }}{% endif %}" {% if resolved_height != 'auto' %} style="--media-text-height: {{ resolved_height }};" {% endif %} >
+    {%- if has_conflicting_sources -%}
+    <div class="media-text__image media-text__error" role="status">Set exactly one of <code>path</code>, <code>youtube_url</code>, or <code>video_file</code>.</div>
+    {%- elif youtube_url or video_file -%}
+    <div class="media-text__image media-text__video-container">
+        {{ <ui.video
+            youtube_url={youtube_url}
+            video_file={video_file}
+            title={title}
+            mime_type={mime_type}
+            poster={poster}
+            loading={resolved_loading}
+            preload={preload}
+            aspect_ratio={aspect_ratio}
+            captions_file={captions_file}
+            captions_lang={captions_lang}
+            captions_label={captions_label}
+            caption={caption}
+            class_name="media-text__video"
+        /> }}
+    </div>
+    {%- elif path -%}
     <figure class="media-text__image">
         {%- if link_url -%}
-        <a class="media-text__link" href="{{ link_url }}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}"></a>
+        <a class="media-text__link" href="{{ link_url }}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}" loading="{{ resolved_loading }}"></a>
         {%- elif modal -%}
-        <a class="image-modal-trigger" href="{{ modal_image.url }}" data-image-modal-trigger data-image-modal-src="{{ modal_image.url }}" data-image-modal-alt="{{ alt }}" aria-label="View larger image{% if alt %}: {{ alt }}{% endif %}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}"></a>
+        <a class="image-modal-trigger" href="{{ modal_image.url }}" data-image-modal-trigger data-image-modal-src="{{ modal_image.url }}" data-image-modal-alt="{{ alt }}" aria-label="View larger image{% if alt %}: {{ alt }}{% endif %}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}" loading="{{ resolved_loading }}"></a>
         {%- else -%}
-        <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}">
+        <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ alt }}" loading="{{ resolved_loading }}">
         {%- endif %}
     </figure>
+    {%- else -%}
+    <div class="media-text__image media-text__error" role="status">Provide one of <code>path</code>, <code>youtube_url</code>, or <code>video_file</code>.</div>
+    {%- endif %}
     <div class="media-text__content">
         {{- body | markdown | safe -}}
     </div>

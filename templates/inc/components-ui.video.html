@@ -4,6 +4,9 @@
     title: string = '',
     mime_type: string = 'video/mp4',
     poster: string = '',
+    loading: string = 'lazy',
+    preload: string = 'none',
+    aspect_ratio: string = '16 / 9',
     captions_file: string = '',
     captions_lang: string = 'en',
     captions_label: string = 'English',
@@ -32,14 +35,14 @@
 {%- elif youtube_url is containing(pat='v=') -%}
 {%- set youtube_id = youtube_url | split(pat='v=') | last | split(pat='&') | first | split(pat='#') | first -%}
 {%- endif -%}
-<figure class="video-embed{% if class_name %} {{ class_name }}{% endif %}">
+<figure class="video-embed{% if class_name %} {{ class_name }}{% endif %}" style="--video-aspect-ratio: {{ aspect_ratio }};">
     {%- if youtube_id -%}
     {%- set embed_url = 'https://www.youtube-nocookie.com/embed/' ~ youtube_id -%}
     <iframe
         class="video-embed__frame"
         src="{{ embed_url }}"
         title="{{ video_title }}"
-        loading="lazy"
+        loading="{{ loading }}"
         referrerpolicy="strict-origin-when-cross-origin"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
@@ -61,8 +64,8 @@
 {%- if captions_file -%}
 {%- set captions_src = get_url(path=captions_file) -%}
 {%- endif -%}
-<figure class="video-embed{% if class_name %} {{ class_name }}{% endif %}">
-<video class="video-embed__player" controls preload="metadata" playsinline aria-label="{{ video_title }}"{% if poster_src %} poster="{{ poster_src }}"{% endif %}>
+<figure class="video-embed{% if class_name %} {{ class_name }}{% endif %}" style="--video-aspect-ratio: {{ aspect_ratio }};">
+<video class="video-embed__player" controls loading="{{ loading }}" preload="{{ preload }}" playsinline aria-label="{{ video_title }}"{% if poster_src %} poster="{{ poster_src }}"{% endif %}>
 <source src="{{ video_src }}" type="{{ mime_type }}">
 {%- if captions_src %}<track kind="captions" src="{{ captions_src }}" srclang="{{ captions_lang }}" label="{{ captions_label }}">{%- endif %}
 Your browser does not support HTML video. <a href="{{ video_src }}">Open the video file</a>.

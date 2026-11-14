@@ -22,6 +22,7 @@
 {%- set hero_height = hero.height | default(value="auto") -%}
 {%- set hero_slider = hero.slider | default(value=false) -%}
 {%- set hero_slider_label = hero.slider_label | default(value="") -%}
+{%- set hero_loading = hero.loading | default(value="") -%}
 {%- set hero_modal_default = hero_modal_default | default(value=true) -%}
 {%- set hero_modal = hero.modal | default(value=hero_modal_default) -%}
 {%- set hero_tint_colour = hero.tint_colour | default(value="white") -%}
@@ -40,6 +41,7 @@
      slider={hero_slider}
      modal={hero_modal}
      slider_label={hero_slider_label}
+     loading={hero_loading}
      tint_colour={hero_tint_colour}
      tint_amount={hero_tint_amount}
      tint_method={hero_tint_method}

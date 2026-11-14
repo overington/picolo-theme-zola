@@ -9,6 +9,7 @@
     slider: bool = false,
     modal: bool = true,
     slider_label: string = '',
+    loading: string = '',
     tint_colour: string = 'white',
     tint_amount: float = 0.0,
     tint_method: string = 'normal',
@@ -58,14 +59,21 @@
         height=resolved_image_height,
         op="fill"
     ) -%}
+    {%- set image_loading = loading -%}
+    {%- if not image_loading -%}
+    {%- set image_loading = 'lazy' -%}
+    {%- if loop.first -%}
+    {%- set image_loading = 'eager' -%}
+    {%- endif -%}
+    {%- endif -%}
     {%- if modal -%}
     {%- set modal_image = resize_image(path=path, width=2400, height=2400, op="fit", format="webp") -%}
     {%- endif -%}
         <div class="hero__slide" data-hero-slide="{{ loop.index0 }}">
             {%- if modal -%}
-            <a class="image-modal-trigger hero__image-link" href="{{ modal_image.url }}" data-image-modal-trigger data-image-modal-src="{{ modal_image.url }}" data-image-modal-alt="{{ image_alt }}" data-image-modal-label="{{ slider_label }}" aria-label="View larger image{% if image_alt %}: {{ image_alt }}{% endif %}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image_alt }}"{% if not image_alt %} aria-hidden="true"{% endif %}></a>
+            <a class="image-modal-trigger hero__image-link" href="{{ modal_image.url }}" data-image-modal-trigger data-image-modal-src="{{ modal_image.url }}" data-image-modal-alt="{{ image_alt }}" data-image-modal-label="{{ slider_label }}" aria-label="View larger image{% if image_alt %}: {{ image_alt }}{% endif %}"><img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image_alt }}" loading="{{ image_loading }}"{% if not image_alt %} aria-hidden="true"{% endif %}></a>
             {%- else -%}
-            <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image_alt }}"{% if not image_alt %} aria-hidden="true"{% endif %}>
+            <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image_alt }}" loading="{{ image_loading }}"{% if not image_alt %} aria-hidden="true"{% endif %}>
             {%- endif %}
         </div>
     {%- endif %}

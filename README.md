@@ -395,7 +395,19 @@ For a local video, provide its Zola path instead. A co-located asset can use Zol
 {{ <ui.video video_file="@/projects/example/demo.mp4" title="Project demo" poster="@/projects/example/poster.jpg" captions_file="@/projects/example/captions.vtt" caption="Optional video caption." /> }}
 ```
 
-For files in `static/`, use the path relative to that directory; for example, `video_file="videos/demo.mp4"` refers to `static/videos/demo.mp4`. The local player uses native controls and preloads metadata. `mime_type` defaults to `video/mp4`; set it to `video/webm` for WebM files. `poster` and `captions_file` are optional, and the captions file should be WebVTT. Use exactly one of `youtube_url` or `video_file`. Set a descriptive `title` for the YouTube iframe or local video player.
+For files in `static/`, use the path relative to that directory; for example, `video_file="videos/demo.mp4"` refers to `static/videos/demo.mp4`. The local player uses native controls, `loading="lazy"`, and `preload="none"` by default, so it defers off-screen clips and asks the browser not to fetch video data until playback. Both loading and preload are browser hints. Provide an optimized `poster` to show a preview; it is loaded as the video approaches the viewport. The default `aspect_ratio` is `"16 / 9"`; set it to values such as `"9 / 16"` for portrait clips to reserve the correct layout space. `mime_type` defaults to `video/mp4`; set it to `video/webm` for WebM files. `poster` and `captions_file` are optional, and the captions file should be WebVTT. Use exactly one of `youtube_url` or `video_file`. Set a descriptive `title` for the YouTube iframe or local video player.
+
+`ui.media_text` also accepts `youtube_url` or `video_file` in place of its image `path`. It forwards the video options above, including `title`, `mime_type`, `poster`, `loading`, `preload`, `aspect_ratio`, caption-track options, and `caption`, to `ui.video`. Video and image media default to lazy loading; a `height="header"` media block defaults to eager loading. You can override this with `loading="lazy"` or `loading="eager"`.
+
+```markdown
+{% <ui.media_text youtube_url="https://youtu.be/VIDEO_ID" title="Project film" position="right"> %}
+Text describing the project film.
+{% </ui.media_text> %}
+
+{{ <ui.media_text video_file="@/projects/example/demo.mp4" title="Project demo" poster="@/projects/example/poster.jpg" /> }}
+```
+
+Provide exactly one media source: `path`, `youtube_url`, or `video_file`. Image-only options such as `alt`, `modal`, and `link_url` apply when `path` is used. For `ui.hero`, `loading` controls its images. With no value, the first image loads eagerly and later slider images load lazily; set `loading="lazy"` to lazy-load every slide or `loading="eager"` to eagerly load every slide. Page heroes accept the same option in `[extra.hero]`, for example `loading = "lazy"`. `preload`, `poster`, and `aspect_ratio` apply to video players, not image-only heroes.
 
 ## Development
 
