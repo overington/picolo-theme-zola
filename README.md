@@ -346,6 +346,16 @@ This is a callout box for important information.
 {{/* end */}}
 ```
 
+### Image gallery
+
+Pass an array of image paths or filenames to `ui.gallery`:
+
+```markdown
+{{ <ui.gallery images={["one.jpg", "two.jpg"]} base_path={page.colocated_path} image_alts={["First drawing", "Second drawing"]} label="Drawings" /> }}
+```
+
+Only `images` is required. `base_path` defaults to an empty string and is concatenated directly with each filename, so include any trailing slash. Without it, each entry must be a complete path accepted by Zola's `resize_image` (for example, `content/projects/example/one.jpg` for a co-located image, or `images/one.jpg` for `static/images/one.jpg`). `image_alts` is optional and positional; missing or empty entries fall back to the filename. Provide descriptive alternatives when possible. `label` optionally gives the gallery an accessible region name; it is not shown as a heading. Thumbnails load lazily, fit without cropping, and link to larger images. Each opens individually in the viewer when the site provides `static/js/image-modal.js`; otherwise the link works as a fallback.
+
 ### Image viewer modal
 
 Resized images rendered with `img.resize`, `ui.image_fit`, `ui.media_text`, and `ui.hero` open in an image modal by default. A single image opens by itself. A `ui.hero` slider opens as a gallery with full-height left/right navigation hotspots, slide-selection dots, keyboard arrow-key support, and synchronized slider position. The modal uses the larger image variant, and the image link still works as a fallback if JavaScript is unavailable. Set `slider_label` on `ui.hero` (or `extra.hero.slider_label` in page front matter) to show a heading above the modal gallery; when omitted, no visible heading is rendered. The slider region keeps an accessible `Image slider` label as a fallback. For example:

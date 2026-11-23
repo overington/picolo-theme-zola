@@ -1,0 +1,21 @@
+{% component ui.gallery(
+    images: array,
+    base_path: string = '',
+    image_alts: array = [],
+    label: string = ''
+) -%}
+{%- if images | length > 0 %}
+<div class="gallery"{% if label %} role="region" aria-label="{{ label | escape }}"{% endif %}>
+    {%- for filename in images -%}
+    {%- set image_alt = filename -%}
+    {%- if image_alts | length > loop.index0 and image_alts[loop.index0] -%}
+    {%- set image_alt = image_alts[loop.index0] -%}
+    {%- endif %}
+    {%- set escaped_alt = image_alt | escape %}
+    <div class="gallery__frame">
+        {{- <ui.image_fit path={base_path ~ filename} max_width={800} max_height={800} alt={escaped_alt} /> -}}
+    </div>
+    {%- endfor %}
+</div>
+{%- endif %}
+{%- endcomponent ui.gallery %}
